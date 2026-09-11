@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>هاوکار — سیستەمی هەڵبژاردنی بەشی زانکۆ</title>
+<title>JiGa - جێگا - سیستەمی زیرەکی هەڵبژاردنی بەشی زانکۆ و پەیمانگاکان </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
@@ -316,10 +316,13 @@
 
 <div class="topbar">
   <div class="brand">
-    <span class="mark">هاوکار</span>
-    <span class="tag">سیستەمی هەڵبژاردنی بەشی زانکۆ و پەیمانگا</span>
+    <span class="mark">Jiga - جێگا</span>
+    <span class="tag">سیستەمی زیرەکی هەڵبژاردنی بەشی زانکۆ و پەیمانگاکان</span>
   </div>
-  <div class="stepper" id="stepperLabel"><b>هەنگاوی ١</b> — بارکردنی داتا</div>
+  <div class="topbar-right">
+    <div class="stepper" id="stepperLabel"><b>هەنگاوی ١</b> — بارکردنی داتا</div>
+    <button class="logout-btn" id="logoutBtn">چونەدەرەوە 🚪</button>
+  </div>
 </div>
 
 <div class="wrap">
@@ -1148,7 +1151,16 @@ function renderResults(student, bands, totalCandidates){
 
   renderResultsUI();
 }
+<footer class="footer">
+  Copyright © 2026 | Developed by jihad.qadir@gmail.com
+</footer>
 
+
+// دوگمەی دەرچوون (Logout)
+document.getElementById('logoutBtn').addEventListener('click', function() {
+  localStorage.removeItem("userLoggedIn");
+  window.location.href = "index.html";
+});
 document.getElementById('printBtn').addEventListener('click', ()=>window.print());
 </script>
 </body>
