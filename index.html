@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>هاوکار — چوونەژوورەوە</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --primary: #1E293B;
+    --accent: #D97706;
+    --accent-hover: #B45309;
+    --bg-main: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --danger: #EF4444;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
+  body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Noto Sans Arabic', sans-serif;
+    line-height: 1.6;
+    direction: rtl;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .auth-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    width: 100%;
+    max-width: 420px;
+    padding: 36px 28px;
+    text-align: center;
+    border: 1px solid var(--border);
+  }
+
+  .auth-card .logo {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 4px;
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+
+  .auth-card p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .auth-field {
+    margin-bottom: 18px;
+    text-align: right;
+  }
+
+  .auth-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 6px;
+  }
+
+  .auth-field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .auth-field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15);
+  }
+
+  .auth-btn {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+    margin-top: 8px;
+  }
+
+  .auth-btn:hover { background: var(--accent-hover); }
+
+  .auth-error {
+    color: var(--danger);
+    font-size: 13px;
+    margin-top: 14px;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="auth-card">
+  <div class="logo">هاوکار</div>
+  <p>تکایە ناوی بەکارهێنەر و پاسۆرد بنووسە بۆ چوونەژوورەوە</p>
+  
+  <div class="auth-field">
+    <label>ناوی بەکارهێنەر (Username)</label>
+    <input type="text" id="loginUser" placeholder="یوزەر بپڕبکەرەوە..." autocomplete="off">
+  </div>
+
+  <div class="auth-field">
+    <label>پاسۆرد (Password)</label>
+    <input type="password" id="loginPass" placeholder="پاسۆرد بپڕبکەرەوە...">
+  </div>
+
+  <button class="auth-btn" id="loginBtn">چوونەژوورەوە</button>
+  <div class="auth-error" id="authError">ناوی بەکارهێنەر یان پاسۆرد هەڵەیە!</div>
+</div>
+
+<script>
+  // ئەگەر پێشتر لۆگئینی کردبێت، ڕاستەوخۆ دەچێتە Home.html
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    window.location.href = 'Home.html';
+  }
+
+  const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxbVXlH_MV75QXc5tSBPGr0D7jbS48UUBKigctPf3-v0T6xlXk2MrEBHm27nqtw-q8zTtc766cdwho/pub?gid=0&single=true&output=csv";
+  let usersDatabase = [];
+
+  async function loadUsersFromGoogleSheet() {
+    try {
+      const response = await fetch(GOOGLE_SHEET_CSV_URL);
+      const data = await response.text();
+      const rows = data.split('\n').map(row => row.trim()).filter(row => row.length > 0);
+      
+      usersDatabase = rows.map(row => {
+        const columns = row.split(',').map(col => col.replace(/^"(.*)"$/, '$1').trim());
+        return {
+          username: columns[0],
+          password: columns[1]
+        };
+      });
+    } catch (error) {
+      console.error("هەڵە لە بارکردنی لیستەکە:", error);
+    }
+  }
+
+  loadUsersFromGoogleSheet();
+
+  const loginBtn = document.getElementById('loginBtn');
+  const loginUser = document.getElementById('loginUser');
+  const loginPass = document.getElementById('loginPass');
+  const authError = document.getElementById('authError');
+
+  loginBtn.addEventListener('click', () => {
+    const userVal = loginUser.value.trim();
+    const passVal = loginPass.value.trim();
+
+    const validUser = usersDatabase.find(u => u.username === userVal && u.password === passVal);
+
+    if (validUser) {
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('activeUser', userVal);
+      window.location.href = 'Home.html'; // گواستنەوە بۆ فایلی Home.html
+    } else {
+      authError.style.display = 'block';
+    }
+  });
+</script>
+
+</body>
+</html>
