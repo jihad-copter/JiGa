@@ -137,6 +137,11 @@
   // ئەگەر پێشتر لۆگئینی کردبێت، ڕاستەوخۆ دەچێتە Home.html
   if (localStorage.getItem('isLoggedIn') === 'true') {
     window.location.href = 'Home.html';
+    // دوای ئەوەی دڵنیا بوویتەوە کە ناوی بەکارهێنەر و وشەی تێپەڕ ڕاستن:
+localStorage.setItem("userLoggedIn", "true");
+
+// سەرڕەوانەکردنی بەکارهێنەر بۆ پەیجی سەرەکی
+window.location.href = "Home.html";
   }
 
   const GOOGLE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxbVXlH_MV75QXc5tSBPGr0D7jbS48UUBKigctPf3-v0T6xlXk2MrEBHm27nqtw-q8zTtc766cdwho/pub?gid=0&single=true&output=csv";
