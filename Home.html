@@ -1175,9 +1175,19 @@ function renderResults(student, bands, totalCandidates){
 }
 
 // دوگمەی دەرچوون (Logout)
-document.getElementById('logoutBtn').addEventListener('click', function() {
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
+  e.preventDefault();
+  
+  // پاککردنەوەی هەموو داتاکانی پەیوەندیدار بە لۆگین
   localStorage.removeItem("userLoggedIn");
-  window.location.href = "index.html";
+  localStorage.removeItem("userData");
+  localStorage.removeItem("username");
+  localStorage.clear(); // پاککردنەوەی هەموو داتای localStorage
+  
+  sessionStorage.clear(); // پاککردنەوەی sessionStorage یش
+  
+  // ڕەوانەکردن بۆ پەیجی لۆگین بە replace بۆ ئەوەی پەیجی پێشوو لە مێژوودا نەمێنێت
+  window.location.replace("index.html");
 });
 
 // دوگمەی چاپکردن
