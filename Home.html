@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
-  // پشکنین: ئەگەر بەکارهێنەر لۆگئینی نەکردبێت، ڕاستەوخۆ دەینێرێتەوە بۆ پەیجی index.html
   if (localStorage.getItem("userLoggedIn") !== "true") {
     window.location.href = "index.html";
   }
@@ -44,7 +43,7 @@
     color:#EFE8D8;
     padding:18px 32px;
     display:flex;
-    align-items:baseline;
+    align-items:center;
     justify-content:space-between;
     border-bottom:3px solid var(--brass);
   }
@@ -56,8 +55,21 @@
     color:#F4EEDD;
   }
   .brand .tag{ font-size:13px; color:#B9C2CE; }
+  .topbar-right{ display:flex; align-items:center; gap:20px; }
   .stepper{ font-size:12.5px; color:#9AA6B2; }
   .stepper b{ color:#F0DDA8; font-weight:700;}
+  .logout-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #F4EEDD;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .logout-btn:hover { background: rgba(178, 59, 59, 0.6); border-color: var(--danger); }
 
   .wrap{ max-width:1280px; margin:0 auto; padding:28px 24px 80px; }
 
@@ -77,6 +89,7 @@
     border-radius:4px;
     padding:34px 20px;
     cursor:pointer;
+    display:block;
     transition:border-color .15s, background .15s;
   }
   .drop:hover, .drop.drag{ border-color:var(--brass); background:#FBF8F0; }
@@ -176,12 +189,11 @@
   .band.safety{ color:var(--safety); }
   .band-desc{ font-size:12px; color:var(--ink-soft); margin:-4px 0 12px; }
 
-  /* ڕێکخستنی بنەڕەتی خشتە */
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
-    table-layout: fixed; /* جێگیرکردنی تیرەی ستونەکان */
+    table-layout: fixed;
   }
   thead th {
     background: #F4F2EA;
@@ -202,7 +214,6 @@
   }
   tbody td.name { text-align: right; font-size: 12px; }
 
-  /* دیاریکردنی بەرینی ستونەکان (Widths) */
   .col-drag   { width: 30px; }
   .col-num    { width: 35px; }
   .col-dept   { width: auto; }
@@ -214,7 +225,6 @@
   .col-session{ width: 80px; }
   .col-action { width: 50px; }
 
-  /* Drag & Drop */
   tbody tr.draggable-row { cursor: grab; transition: background .15s ease; }
   tbody tr.draggable-row:active { cursor: grabbing; }
   tbody tr.draggable-row.dragging { opacity: 0.4; background: #E2DFD2 !important; }
@@ -250,7 +260,6 @@
     padding: 1px 5px; font-size: 10px; margin-right: 5px; font-weight: bold;
   }
 
-  /* ---------- ڕێکخستنی تایبەتمەندی ڕاستەوخۆی PRINT ---------- */
   .report-header{ display:none; }
   
   @media print{
@@ -268,7 +277,6 @@
       display: none !important;
     }
     
-    /* شارادنەوەی دەستەکی ڕاکێشان و دەگمەنی سڕینەوە */
     .col-drag, .col-action, .drag-handle {
       display: none !important;
       width: 0 !important;
@@ -300,7 +308,6 @@
       padding: 5px 3px !important;
     }
 
-    /* داڕشتنەوەی بەرینی ستونەکان تایبەت بە وەرەقەی چاپکراو */
     .col-num    { width: 4% !important; }
     .col-dept   { width: 38% !important; }
     .col-prov   { width: 10% !important; }
@@ -451,7 +458,6 @@
 
   </div>
 </div>
-
 <script>
 const EMBEDDED_DEPARTMENTS = [
   {"name":"ههولێر/ زانكۆی سهڵاحهدین/ كۆلێژی زانست/ كۆمپیوتهر و ئینفۆرماتیك/ IT","university":"زانکۆی سەڵاحەدین","province":"هەولێر","field":"كۆمپیوتهر","fieldLabel":"کۆمپیوتەر و ئینفۆرماتیک","section":"كۆلێژی زانست (كۆمپیوتهر)","rows":[{"quota":"پارێزگا","track":"زانكۆلاین","session":"بەیانی","score":87.8},{"quota":"پارێزگا","track":"پارالێڵ","session":"بەیانی","score":85.799},{"quota":"گشتی","track":"زانكۆلاین","session":"بەیانی","score":91.541},{"quota":"گشتی","track":"پارالێڵ","session":"بەیانی","score":89.614}]},
@@ -459,63 +465,379 @@ const EMBEDDED_DEPARTMENTS = [
   {"name":"دهۆك / كۆلێژی زانستی مرۆڤایەتی / جوگرافیا","university":"زانکۆی دهۆک","province":"دهۆک","field":"ئاداب+زانستهمرۆڤایهتیهكان","fieldLabel":"ئاداب و زانستە مرۆڤایەتییەکان","section":"كۆلێژی ئاداب + زانستهمرۆڤایهتیهكان ( جوگرافیا)","rows":[{"quota":"پارێزگا","track":"زانكۆلاین","session":"بەیانی","score":62.5},{"quota":"پارێزگا","track":"پارالێڵ","session":"بەیانی","score":59.4}]}
 ];
 
-let currentDepts = EMBEDDED_DEPARTMENTS;
+let rawDepts = [];
+let favFields = new Set();
+let favUnis = new Set();
+let favProvs = new Set();
+let draggedIndex = null;
+let dragBandKey = null;
+
+let filterBranch = "زانستی";
+let filterTrack = "زانكۆلاین";
+let filterSession = "بەیانی";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const proceedBtn = document.getElementById("proceedBtn");
-  const uploadShell = document.getElementById("uploadShell");
-  const mainLayout = document.getElementById("mainLayout");
-  const stepperLabel = document.getElementById("stepperLabel");
+  setupSegmentButtons("segBranch", (v) => { filterBranch = v; });
+  setupSegmentButtons("segTrack", (v) => { filterTrack = v; });
+  setupSegmentButtons("segSession", (v) => { filterSession = v; });
 
-  if(currentDepts.length > 0) {
-    proceedBtn.disabled = false;
-    document.getElementById("statsRow").style.display = "flex";
-    document.getElementById("statDepts").innerText = currentDepts.length;
-    document.getElementById("statUnis").innerText = new Set(currentDepts.map(d => d.university)).size;
-    document.getElementById("statFields").innerText = new Set(currentDepts.map(d => d.fieldLabel)).size;
-    document.getElementById("statProvs").innerText = new Set(currentDepts.map(d => d.province)).size;
-  }
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
 
-  proceedBtn.addEventListener("click", () => {
-    uploadShell.style.display = "none";
-    mainLayout.style.display = "grid";
-    stepperLabel.innerHTML = "<b>هەنگاوی ٢</b> — پڕکردنەوەی زانیاری";
+  dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("drag"); });
+  dropZone.addEventListener("dragleave", () => dropZone.classList.remove("drag"));
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("drag");
+    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
   });
 
+  fileInput.addEventListener("change", (e) => {
+    if (e.target.files.length) handleFile(e.target.files[0]);
+  });
+
+  document.getElementById("proceedBtn").addEventListener("click", () => {
+    document.getElementById("uploadShell").style.display = "none";
+    document.getElementById("mainLayout").style.display = "grid";
+    document.getElementById("stepperLabel").innerHTML = "<b>هەنگاوی ٢</b> — پڕکردنەوەی زانیاری و پێشنیار";
+    populateChips();
+  });
+
+  document.getElementById("genBtn").addEventListener("click", generateRecommendations);
+  document.getElementById("resetBtn").addEventListener("click", () => location.reload());
+  document.getElementById("printBtn").addEventListener("click", () => window.print());
+  
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.removeItem("userLoggedIn");
     window.location.href = "index.html";
   });
 
-  document.getElementById("genBtn").addEventListener("click", () => {
-    const score = parseFloat(document.getElementById("fScore").value);
-    if (!score) {
-      alert("تکایە کۆی گشتی نمرە (معدەل) دیاری بکە!");
-      return;
-    }
-    document.getElementById("emptyState").style.display = "none";
-    document.getElementById("resultsBody").style.display = "block";
-    document.getElementById("printBtn").style.display = "inline-block";
-
-    let html = `<div class="band match"><div class="band-head"><h3>بەشە پێشنیارکراوەکان</h3><div class="count"><span>${currentDepts.length}</span></div></div><table><thead><tr><th class="col-num">#</th><th class="col-dept">ناوی بەش / زانکۆ</th><th class="col-prov">پارێزگا</th><th class="col-score">کەمترین نمرە</th></tr></thead><tbody>`;
-    
-    currentDepts.forEach((dept, i) => {
-      let minScore = dept.rows && dept.rows.length ? dept.rows[0].score : "N/A";
-      html += `<tr><td>${i + 1}</td><td class="name">${dept.name}</td><td>${dept.province}</td><td>${minScore}</td></tr>`;
-    });
-    
-    html += `</tbody></table></div>`;
-    document.getElementById("resultsBody").innerHTML = html;
-  });
-
-  document.getElementById("printBtn").addEventListener("click", () => {
-    window.print();
-  });
-
-  document.getElementById("resetBtn").addEventListener("click", () => {
-    location.reload();
-  });
+  if (EMBEDDED_DEPARTMENTS && EMBEDDED_DEPARTMENTS.length > 0) {
+    rawDepts = EMBEDDED_DEPARTMENTS;
+    showStats(rawDepts, "داتای ناوەکی سیستەم بە سەرکەوتوویی بارکرا.");
+  }
 });
+
+function setupSegmentButtons(containerId, onChange) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  const btns = container.querySelectorAll("button");
+  btns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      btns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      onChange(btn.getAttribute("data-v"));
+    });
+  });
+}
+
+function handleFile(file) {
+  const statusEl = document.getElementById("uploadStatus");
+  statusEl.className = "upload-status";
+  statusEl.innerText = "خەریکی خوێندنەوەی فایلەکەیە...";
+
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (ext === 'json') {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        rawDepts = JSON.parse(e.target.result);
+        showStats(rawDepts, `فایلی ${file.name} بارکرا.`);
+      } catch (err) {
+        statusEl.className = "upload-status err";
+        statusEl.innerText = "هەڵە لە خوێندنەوەی JSON: " + err.message;
+      }
+    };
+    reader.readAsText(file);
+  } else if (ext === 'xlsx' || ext === 'xls') {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = new Uint8Array(e.target.result);
+        const wb = XLSX.read(data, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        const json = XLSX.utils.sheet_to_json(ws);
+        rawDepts = parseExcelData(json);
+        showStats(rawDepts, `فایلی Excel بارکرا (${rawDepts.length} بەش).`);
+      } catch (err) {
+        statusEl.className = "upload-status err";
+        statusEl.innerText = "هەڵە لە خوێندنەوەی Excel: " + err.message;
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  } else {
+    statusEl.className = "upload-status err";
+    statusEl.innerText = "تکایە فایلی .xlsx یان .json هەڵبژێرە.";
+  }
+}
+
+function parseExcelData(rows) {
+  const map = new Map();
+  rows.forEach(r => {
+    const name = r["ناوی بەش"] || r["Department"] || r["name"] || "";
+    if (!name) return;
+    if (!map.has(name)) {
+      map.set(name, {
+        name,
+        university: r["زانکۆ"] || r["University"] || r["university"] || "",
+        province: r["پارێزگا"] || r["Province"] || r["province"] || "",
+        field: r["بوار"] || r["Field"] || r["field"] || "",
+        fieldLabel: r["ناوی بوار"] || r["fieldLabel"] || r["بوار"] || "",
+        rows: []
+      });
+    }
+    map.get(name).rows.push({
+      quota: r["کۆتا"] || r["quota"] || "گشتی",
+      track: r["ڕێڕەو"] || r["track"] || "زانكۆلاین",
+      session: r["خوێندن"] || r["session"] || "بەیانی",
+      score: parseFloat(r["کەمترین نمرە"] || r["score"] || 0)
+    });
+  });
+  return Array.from(map.values());
+}
+
+function showStats(depts, msg) {
+  const statusEl = document.getElementById("uploadStatus");
+  statusEl.className = "upload-status ok";
+  statusEl.innerText = msg;
+
+  document.getElementById("statDepts").innerText = depts.length;
+  document.getElementById("statUnis").innerText = new Set(depts.map(d => d.university)).size;
+  document.getElementById("statFields").innerText = new Set(depts.map(d => d.fieldLabel || d.field)).size;
+  document.getElementById("statProvs").innerText = new Set(depts.map(d => d.province)).size;
+  document.getElementById("statsRow").style.display = "flex";
+  document.getElementById("proceedBtn").disabled = false;
+}
+
+function populateChips() {
+  const fields = new Set(), unis = new Set(), provs = new Set();
+  rawDepts.forEach(d => {
+    if (d.fieldLabel) fields.add(d.fieldLabel);
+    if (d.university) unis.add(d.university);
+    if (d.province) provs.add(d.province);
+  });
+
+  renderChipGroup("chipsFields", Array.from(fields), favFields);
+  renderChipGroup("chipsUnis", Array.from(unis), favUnis);
+  renderChipGroup("chipsProvs", Array.from(provs), favProvs);
+}
+
+function renderChipGroup(containerId, items, setObj) {
+  const c = document.getElementById(containerId);
+  c.innerHTML = "";
+  items.sort().forEach(item => {
+    const el = document.createElement("div");
+    el.className = "chip" + (setObj.has(item) ? " on" : "");
+    el.innerText = item;
+    el.addEventListener("click", () => {
+      if (setObj.has(item)) setObj.delete(item);
+      else setObj.add(item);
+      el.classList.toggle("on");
+    });
+    c.appendChild(el);
+  });
+}
+
+function generateRecommendations() {
+  const name = document.getElementById("fName").value.trim() || "خوێندکار";
+  const score = parseFloat(document.getElementById("fScore").value);
+  const userProv = document.getElementById("fProvince").value;
+
+  if (!score || isNaN(score)) {
+    alert("تکایە کۆی گشتی نمرە (معدەل) بە دروستی بنووسە.");
+    return;
+  }
+
+  const evaluated = [];
+  rawDepts.forEach(dept => {
+    let bestRow = null;
+    let bestDiff = Infinity;
+
+    dept.rows.forEach(r => {
+      if (filterTrack && r.track !== filterTrack) return;
+      if (filterSession && r.session !== filterSession) return;
+      if (r.quota === "پارێزگا" && userProv && dept.province !== userProv) return;
+
+      const diff = score - r.score;
+      if (Math.abs(diff) < Math.abs(bestDiff)) {
+        bestDiff = diff;
+        bestRow = r;
+      }
+    });
+
+    if (bestRow) {
+      let isFav = false;
+      if (favFields.has(dept.fieldLabel) || favUnis.has(dept.university) || favProvs.has(dept.province)) {
+        isFav = true;
+      }
+      evaluated.push({
+        dept,
+        matchedRow: bestRow,
+        diff: bestDiff,
+        isFav
+      });
+    }
+  });
+
+  evaluated.sort((a, b) => {
+    if (a.isFav !== b.isFav) return a.isFav ? -1 : 1;
+    return Math.abs(a.diff) - Math.abs(b.diff);
+  });
+
+  const selected = evaluated.slice(0, 50);
+
+  const reach = [], match = [], safety = [];
+  selected.forEach(item => {
+    if (item.diff < -2.0) reach.push(item);
+    else if (item.diff <= 3.0) match.push(item);
+    else safety.push(item);
+  });
+
+  window.currentBands = { reach, match, safety };
+
+  document.getElementById("reportInfo").innerHTML = `
+    <span><b>ناو:</b> ${name}</span>
+    <span><b>معدەل:</b> ${score}</span>
+    <span><b>لق:</b> ${filterBranch}</span>
+    <span><b>پارێزگا:</b> ${userProv || "دیاری نەکراوە"}</span>
+    <span><b>ڕێڕەو:</b> ${filterTrack || "هەمووی"}</span>
+    <span><b>خوێندن:</b> ${filterSession || "هەمووی"}</span>
+  `;
+
+  document.getElementById("resultsMeta").innerText = `پێشنیارکراوەکان بەپێی نمرەی ${score} (سەرجەم ٥٠ بەش)`;
+  document.getElementById("emptyState").style.display = "none";
+  document.getElementById("resultsBody").style.display = "block";
+  document.getElementById("printBtn").style.display = "inline-block";
+
+  renderResultsTable();
+}
+
+function renderResultsTable() {
+  const container = document.getElementById("resultsBody");
+  container.innerHTML = "";
+
+  const bandsConfig = [
+    { key: "reach", title: "بەشە سەختەکان (Reach) — هیوای کەمتر", desc: "ئەم بەشانە نمرەی پارساڵیان بەرزتر بووە لە نمرەی تۆ (جیاوازی زیاتر لە -2 نمرە)", list: window.currentBands.reach },
+    { key: "match", title: "بەشە زۆر گونجاوەکان (Match) — ئەگەری بەرز", desc: "ئەم بەشانە زۆر ڕێک لەگەڵ نمرەکەت دەگونجێن (-2 تا +3 نمرە)", list: window.currentBands.match },
+    { key: "safety", title: "بەشە مسۆگەرەکان (Safety) — جێگەی دڵنیایی", desc: "نمرەکەت زۆر لە نمرەی پارساڵی ئەم بەشانە بەرزترە (زیاتر لە +3 نمرە)", list: window.currentBands.safety }
+  ];
+
+  bandsConfig.forEach(b => {
+    if (b.list.length === 0) return;
+
+    const div = document.createElement("div");
+    div.className = `band ${b.key}`;
+
+    let rowsHtml = "";
+    b.list.forEach((item, idx) => {
+      const d = item.dept;
+      const r = item.matchedRow;
+      const diffStr = (item.diff > 0 ? "+" : "") + item.diff.toFixed(2);
+      const diffClass = item.diff < 0 ? "diffpos" : (item.diff > 3 ? "diffneg" : "diffzero");
+
+      rowsHtml += `
+        <tr class="draggable-row ${item.isFav ? 'fav-row' : ''}" data-band="${b.key}" data-index="${idx}" draggable="true">
+          <td class="col-drag"><span class="drag-handle">☰</span></td>
+          <td class="col-num">${idx + 1}</td>
+          <td class="col-dept name">
+            ${item.isFav ? '<span class="fav-badge">دڵخواز</span>' : ''}
+            <b>${d.name}</b>
+          </td>
+          <td class="col-prov">${d.province}</td>
+          <td class="col-score">${r.score}</td>
+          <td class="col-diff ${diffClass}">${diffStr}</td>
+          <td class="col-quota">${r.quota}</td>
+          <td class="col-track">${r.track}</td>
+          <td class="col-session">${r.session}</td>
+          <td class="col-action">
+            <button class="action-btn delete" onclick="deleteItem('${b.key}', ${idx})">✕</button>
+          </td>
+        </tr>
+      `;
+    });
+
+    div.innerHTML = `
+      <div class="band-head">
+        <h3>${b.title}</h3>
+        <div class="count"><span>${b.list.length}</span></div>
+      </div>
+      <div class="band-desc">${b.desc}</div>
+      <table>
+        <thead>
+          <tr>
+            <th class="col-drag"></th>
+            <th class="col-num">#</th>
+            <th class="col-dept">ناوی بەش / زانکۆ</th>
+            <th class="col-prov">پارێزگا</th>
+            <th class="col-score">نمرەی پارساڵ</th>
+            <th class="col-diff">جیاوازی</th>
+            <th class="col-quota">کۆتا</th>
+            <th class="col-track">ڕێڕەو</th>
+            <th class="col-session">خوێندن</th>
+            <th class="col-action">کردار</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+    `;
+
+    container.appendChild(div);
+  });
+
+  attachDragEvents();
+}
+
+function attachDragEvents() {
+  const rows = document.querySelectorAll(".draggable-row");
+  rows.forEach(row => {
+    row.addEventListener("dragstart", (e) => {
+      draggedIndex = parseInt(row.getAttribute("data-index"));
+      dragBandKey = row.getAttribute("data-band");
+      row.classList.add("dragging");
+      e.dataTransfer.effectAllowed = "move";
+    });
+
+    row.addEventListener("dragend", () => {
+      row.classList.remove("dragging");
+      document.querySelectorAll(".draggable-row").forEach(r => r.classList.remove("drag-over"));
+    });
+
+    row.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      const targetBand = row.getAttribute("data-band");
+      if (targetBand === dragBandKey) {
+        row.classList.add("drag-over");
+      }
+    });
+
+    row.addEventListener("dragleave", () => {
+      row.classList.remove("drag-over");
+    });
+
+    row.addEventListener("drop", (e) => {
+      e.preventDefault();
+      row.classList.remove("drag-over");
+      const targetIndex = parseInt(row.getAttribute("data-index"));
+      const targetBand = row.getAttribute("data-band");
+
+      if (targetBand === dragBandKey && draggedIndex !== null && draggedIndex !== targetIndex) {
+        const list = window.currentBands[dragBandKey];
+        const movedItem = list.splice(draggedIndex, 1)[0];
+        list.splice(targetIndex, 0, movedItem);
+        renderResultsTable();
+      }
+    });
+  });
+}
+
+function deleteItem(bandKey, index) {
+  if (confirm("دڵنیای لە سڕینەوەی ئەم بەشە لە ڕێزبەندییەکە؟")) {
+    window.currentBands[bandKey].splice(index, 1);
+    renderResultsTable();
+  }
+}
 </script>
 </body>
 </html>
