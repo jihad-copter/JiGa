@@ -1155,12 +1155,13 @@ function renderResults(student, bands, totalCandidates){
   Copyright © 2026 | Developed by jihad.qadir@gmail.com
 </footer>
 
+  <script>
 
-// دوگمەی دەرچوون (Logout)
-document.getElementById('logoutBtn').addEventListener('click', function() {
+document.getElementById('logoutBtn').addEventListener('click', () => {
   localStorage.removeItem("userLoggedIn");
   window.location.href = "index.html";
 });
+
 document.getElementById('printBtn').addEventListener('click', ()=>window.print());
 </script>
 </body>
