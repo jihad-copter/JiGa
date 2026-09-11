@@ -6,7 +6,12 @@
 <title>هاوکار — سیستەمی هەڵبژاردنی بەشی زانکۆ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
+<script>
+  // پشکنین: ئەگەر بەکارهێنەر لۆگئینی نەکردبێت، ڕاستەوخۆ دەینێرێتەوە بۆ پەیجی index.html
+  if (localStorage.getItem("userLoggedIn") !== "true") {
+    window.location.href = "index.html";
+  }
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
   :root{
@@ -455,6 +460,13 @@ function normArabic(s){
     .replace(/ێ/g,'ی').replace(/ە/g,'ه').replace(/ۆ/g,'و').replace(/ڕ/g,'ر')
     .replace(/ددین/g,'دین')
     .toLowerCase();
+}
+  function logout() {
+  // سڕینەوەی دۆخی لۆگین لە زاکیرەی وێبگەڕ
+  localStorage.removeItem("userLoggedIn");
+  
+  // گەڕانەوە بۆ پەیجی لۆگین
+  window.location.href = "index.html";
 }
 function stripZwnj(s){ return s ? String(s).replace(/\u200c|\u200f/g,'').trim() : ''; }
 
