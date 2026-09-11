@@ -4,353 +4,663 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>هاوکار — چوونەژوورەوە</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+  :root {
+    --primary: #1E293B;
+    --primary-light: #334155;
+    --accent: #D97706;
+    --accent-hover: #B45309;
+    --accent-soft: #FEF3C7;
+    --bg-main: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --border: #E2E8F0;
+    --danger: #EF4444;
+    --success: #10B981;
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  
   body {
+    background: linear-gradient(135deg, #F8FAFC 0%, #E0E7FF 100%);
+    color: var(--text-main);
     font-family: 'Noto Sans Arabic', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    line-height: 1.6;
+    direction: rtl;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
-    direction: rtl;
+    position: relative;
+    overflow-x: hidden;
   }
-  .card {
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+
+  /* خاڵە ڕازاوەکان */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(217,119,6,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -150px;
+    left: -150px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(30,41,59,0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .auth-wrapper {
     width: 100%;
-    max-width: 440px;
-    padding: 40px 30px;
+    max-width: 460px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .auth-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.03);
+    padding: 40px 32px;
     text-align: center;
+    animation: fadeInUp 0.5s ease-out;
   }
-  .logo {
-    font-size: 50px;
-    margin-bottom: 10px;
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  h1 {
-    font-size: 26px;
-    color: #1E293B;
+
+  .logo-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--accent) 0%, #F59E0B 100%);
+    border-radius: 20px;
+    margin-bottom: 16px;
+    font-size: 34px;
+    box-shadow: 0 10px 25px -5px rgba(217,119,6,0.4);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .auth-card .logo-text {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
     margin-bottom: 6px;
+    font-family: 'Noto Naskh Arabic', serif;
+    letter-spacing: -0.5px;
   }
-  .sub {
-    color: #64748B;
-    font-size: 14px;
-    margin-bottom: 26px;
+
+  .auth-card .tagline {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    margin-bottom: 28px;
   }
+
+  /* تابەکان */
   .tabs {
     display: flex;
-    background: #F1F5F9;
+    background: var(--bg-main);
     border-radius: 12px;
     padding: 4px;
     margin-bottom: 24px;
+    border: 1px solid var(--border);
   }
-  .tab {
+
+  .tab-btn {
     flex: 1;
-    padding: 10px;
+    padding: 10px 8px;
     background: transparent;
     border: none;
     border-radius: 9px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 13.5px;
     font-weight: 700;
-    color: #64748B;
+    color: var(--text-muted);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s;
   }
-  .tab.active {
-    background: #fff;
-    color: #D97706;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+
+  .tab-btn.active {
+    background: var(--card-bg);
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   }
-  .panel { display: none; }
-  .panel.active { display: block; }
-  .field {
-    margin-bottom: 14px;
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; animation: fadeIn 0.3s; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .auth-field {
+    margin-bottom: 16px;
     text-align: right;
   }
-  .field label {
+
+  .auth-field label {
     display: block;
     font-size: 13px;
     font-weight: 600;
-    color: #334155;
-    margin-bottom: 6px;
+    color: var(--text-main);
+    margin-bottom: 7px;
   }
-  .field input, .field select {
+
+  .auth-field label .req {
+    color: var(--danger);
+    margin-right: 2px;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-wrap .icon {
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .auth-field input,
+  .auth-field select {
     width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid #E2E8F0;
+    padding: 12px 42px 12px 14px;
+    border: 1.5px solid var(--border);
     border-radius: 10px;
     font-size: 14px;
-    font-family: inherit;
     outline: none;
-    background: #F8FAFC;
-    transition: 0.2s;
+    transition: all 0.2s;
+    font-family: inherit;
+    background: #FCFCFD;
+    color: var(--text-main);
   }
-  .field input:focus, .field select:focus {
-    border-color: #D97706;
+
+  .auth-field select {
+    padding-right: 14px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2'%3e%3cpolyline points='6 9 12 15 18 9'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 16px;
+  }
+
+  .auth-field input:focus,
+  .auth-field select:focus {
+    border-color: var(--accent);
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(217,119,6,0.12);
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.12);
   }
-  .btn {
+
+  .auth-field input::placeholder { color: #94A3B8; }
+
+  .auth-btn {
     width: 100%;
-    padding: 13px;
-    background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+    background: linear-gradient(135deg, var(--accent) 0%, #F59E0B 100%);
     color: #fff;
     border: none;
-    border-radius: 10px;
+    padding: 13px;
     font-size: 15px;
     font-weight: 700;
-    font-family: inherit;
+    border-radius: 10px;
     cursor: pointer;
+    transition: all 0.25s;
+    font-family: inherit;
     margin-top: 8px;
-    transition: 0.2s;
+    box-shadow: 0 8px 20px -6px rgba(217,119,6,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
   }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(217,119,6,0.4); }
-  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .auth-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -6px rgba(217,119,6,0.6);
+  }
+
+  .auth-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .auth-btn .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2.5px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
   .msg {
-    margin-top: 14px;
-    padding: 10px;
-    border-radius: 8px;
     font-size: 13px;
+    margin-top: 14px;
+    padding: 10px 14px;
+    border-radius: 8px;
     display: none;
     text-align: right;
+    line-height: 1.5;
   }
-  .msg.show { display: block; }
-  .msg.err { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; }
-  .msg.ok { background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7; }
-  .success-box {
+
+  .msg.err {
+    color: #991B1B;
+    background: #FEE2E2;
+    border: 1px solid #FCA5A5;
+    display: block;
+  }
+
+  .msg.ok {
+    color: #065F46;
+    background: #D1FAE5;
+    border: 1px solid #6EE7B7;
+    display: block;
+  }
+
+  .msg.info {
+    color: #1E40AF;
+    background: #DBEAFE;
+    border: 1px solid #93C5FD;
+    display: block;
+  }
+
+  /* شاشەی سەرکەوتن */
+  .success-screen {
     text-align: center;
     padding: 20px 0;
   }
-  .success-box .icon {
-    width: 80px; height: 80px;
-    background: #10B981;
+
+  .success-screen .check-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-size: 42px;
     color: #fff;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px -8px rgba(16,185,129,0.5);
+    animation: pop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
-  .success-box h2 {
-    color: #1E293B;
+
+  @keyframes pop {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  .success-screen h2 {
+    font-size: 22px;
+    color: var(--primary);
     margin-bottom: 10px;
+    font-family: 'Noto Naskh Arabic', serif;
   }
-  .success-box p {
-    color: #64748B;
+
+  .success-screen p {
+    color: var(--text-muted);
     font-size: 14px;
+    margin-bottom: 8px;
     line-height: 1.7;
-    margin-bottom: 16px;
   }
-  .phone-show {
+
+  .success-screen .phone-box {
     display: inline-block;
-    background: #FEF3C7;
-    color: #B45309;
+    background: var(--accent-soft);
+    color: var(--accent-hover);
     padding: 10px 20px;
     border-radius: 10px;
     font-weight: 700;
     font-size: 16px;
-    border: 1px dashed #D97706;
+    margin: 12px 0 18px;
+    border: 1px dashed var(--accent);
     direction: ltr;
-    margin-bottom: 16px;
+  }
+
+  .helper-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    line-height: 1.6;
   }
 </style>
 </head>
 <body>
 
-<div class="card" id="mainCard">
-  <div class="logo">🎓</div>
-  <h1>هاوکار</h1>
-  <p class="sub">سیستەمی هەڵبژاردنی بەشی زانکۆ</p>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="logo-badge">🎓</div>
+    <div class="logo-text">هاوکار</div>
+    <p class="tagline">سیستەمی زیرەکی هەڵبژاردنی بەشی زانکۆ و پەیمانگاکان</p>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="login">چوونەژوورەوە</button>
-    <button class="tab" data-tab="register">خۆتۆمارکردن</button>
-  </div>
+    <!-- تابەکان -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="login">چوونەژوورەوە</button>
+      <button class="tab-btn" data-tab="register">خۆتۆمارکردن</button>
+    </div>
 
-  <!-- چوونەژوورەوە -->
-  <div class="panel active" id="panel-login">
-    <div class="field">
-      <label>ناوی بەکارهێنەر</label>
-      <input type="text" id="loginUser" placeholder="ناوی بەکارهێنەر...">
-    </div>
-    <div class="field">
-      <label>پاسۆرد</label>
-      <input type="password" id="loginPass" placeholder="پاسۆرد...">
-    </div>
-    <button class="btn" id="loginBtn">چوونەژوورەوە</button>
-    <div class="msg" id="loginMsg"></div>
-  </div>
+    <!-- تاب: چوونەژوورەوە -->
+    <div class="tab-panel active" id="panel-login">
+      <div class="auth-field">
+        <label>ناوی بەکارهێنەر <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="text" id="loginUser" placeholder="ناوی بەکارهێنەر بنووسە..." autocomplete="off">
+          <span class="icon">👤</span>
+        </div>
+      </div>
 
-  <!-- خۆتۆمارکردن -->
-  <div class="panel" id="panel-register">
-    <div class="field">
-      <label>ناوی تەواو</label>
-      <input type="text" id="regName" placeholder="ناوی تەواوت...">
+      <div class="auth-field">
+        <label>پاسۆرد <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="password" id="loginPass" placeholder="پاسۆرد بنووسە...">
+          <span class="icon">🔒</span>
+        </div>
+      </div>
+
+      <button class="auth-btn" id="loginBtn">چوونەژوورەوە ←</button>
+      <div class="msg" id="loginMsg"></div>
+
+      <div class="helper-note">
+        💡 تێبینی: پاسۆردەکەت لەلایەن بەڕێوەبەر بۆ دەنێردرێت دوای خۆتۆمارکردن.
+      </div>
     </div>
-    <div class="field">
-      <label>ژمارەی مۆبایل</label>
-      <input type="tel" id="regPhone" placeholder="07XXXXXXXXX" maxlength="11">
+
+    <!-- تاب: خۆتۆمارکردن -->
+    <div class="tab-panel" id="panel-register">
+      <div class="auth-field">
+        <label>ناوی تەواو <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="text" id="regName" placeholder="ناوی تەواوت بنووسە..." autocomplete="off">
+          <span class="icon">👤</span>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>ژمارەی مۆبایل <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="tel" id="regPhone" placeholder="07XX XXX XXXX" autocomplete="off" maxlength="11">
+          <span class="icon">📱</span>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>لقی خوێندن <span class="req">*</span></label>
+        <div class="input-wrap">
+          <select id="regBranch">
+            <option value="">— هەڵبژێرە —</option>
+            <option value="زانستی">زانستی</option>
+            <option value="وێژەیی">وێژەیی</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="auth-field">
+        <label>ناوی بەکارهێنەری دڵخواز <span class="req">*</span></label>
+        <div class="input-wrap">
+          <input type="text" id="regUsername" placeholder="بە ئینگلیزی بنووسە..." autocomplete="off">
+          <span class="icon">@</span>
+        </div>
+      </div>
+
+      <button class="auth-btn" id="registerBtn">ناردنی داواکاری 📨</button>
+      <div class="msg" id="registerMsg"></div>
+
+      <div class="helper-note">
+        📌 دوای ناردنی داواکاری، بەڕێوەبەر پاسۆردەکەت بۆ دەنێرێت و ئەکاونتەکەت چالاک دەکرێت.
+      </div>
     </div>
-    <div class="field">
-      <label>لقی خوێندن</label>
-      <select id="regBranch">
-        <option value="">— هەڵبژێرە —</option>
-        <option value="زانستی">زانستی</option>
-        <option value="وێژەیی">وێژەیی</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>ناوی بەکارهێنەری دڵخواز</label>
-      <input type="text" id="regUsername" placeholder="بە ئینگلیزی...">
-    </div>
-    <button class="btn" id="registerBtn">ناردنی داواکاری</button>
-    <div class="msg" id="registerMsg"></div>
   </div>
 </div>
 
 <script>
-  const HOME_PAGE = "Home.html";
-  const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxbVXlH_MV75QXc5tSBPGr0D7jbS48UUBKigctPf3-v0T6xlXk2MrEBHm27nqtw-q8zTtc766cdwho/pub?gid=0&single=true&output=csv";
-  
-  // ⚠️ لینکی Apps Script لێرە دابنێ
-  const API_URL = "https://script.google.com/a/macros/uor.edu.krd/s/AKfycbyBjDi8ZRpyfkjCHkSmX9iTdqBXe9Wom_ctqO-UGuK34Pa_sipUMjuR9Hix2nOr_Sbe/exec";
+  /* ============================================================
+     ڕێکخستنەکان
+     ============================================================ */
+  const HOME_PAGE = "Home.html";  // ناوی پەیجی سەرەکی
+  const LOGIN_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxbVXlH_MV75QXc5tSBPGr0D7jbS48UUBKigctPf3-v0T6xlXk2MrEBHm27nqtw-q8zTtc766cdwho/pub?gid=0&single=true&output=csv";
 
-  // ئەگەر پێشتر لۆگین کردووە
+  // ⚠️ لە خوارەوە URL ی Google Apps Script دابنێ (ڕێنمایی لە خوارەوە هەیە)
+  const REGISTER_API_URL = "https://script.google.com/a/macros/uor.edu.krd/s/AKfycbyBjDi8ZRpyfkjCHkSmX9iTdqBXe9Wom_ctqO-UGuK34Pa_sipUMjuR9Hix2nOr_Sbe/exec";
+
+  /* ============================================================
+     ئەگەر پێشتر لۆگین کردووە، ڕاستەوخۆ بڕۆ بۆ Home
+     ============================================================ */
   if (localStorage.getItem("userLoggedIn") === "true") {
     window.location.replace(HOME_PAGE);
   }
 
-  // تابەکان
-  document.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+  /* ============================================================
+     تابەکان
+     ============================================================ */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
+      // پاککردنەوەی نامەکان
       document.getElementById('loginMsg').className = 'msg';
+      document.getElementById('loginMsg').textContent = '';
       document.getElementById('registerMsg').className = 'msg';
+      document.getElementById('registerMsg').textContent = '';
     });
   });
 
-  // بارکردنی بەکارهێنەران
-  let users = [];
-  async function loadUsers() {
+  /* ============================================================
+     بارکردنی بەکارهێنەران لە گۆگڵ شیت
+     ============================================================ */
+  let usersDatabase = [];
+
+  async function loadUsersFromGoogleSheet() {
     try {
-      const res = await fetch(CSV_URL + "&t=" + Date.now());
-      const text = await res.text();
-      const rows = text.split('\n').map(r => r.trim()).filter(r => r);
-      users = rows.slice(1).map(row => {
-        const c = row.split(',').map(x => x.replace(/^"(.*)"$/, '$1').trim());
-        return { username: c[0] || '', password: c[1] || '' };
+      const response = await fetch(LOGIN_SHEET_CSV_URL + "&t=" + Date.now());
+      const data = await response.text();
+      const rows = data.split('\n').map(r => r.trim()).filter(r => r.length > 0);
+      
+      // سەری خشتەکە (header) لابە
+      const dataRows = rows.slice(1);
+      
+      usersDatabase = dataRows.map(row => {
+        const columns = row.split(',').map(c => c.replace(/^"(.*)"$/, '$1').trim());
+        return {
+          username: columns[0] || '',
+          password: columns[1] || ''
+        };
       }).filter(u => u.username && u.password);
-    } catch (e) {
-      console.error(e);
+
+      console.log("✅ بەکارهێنەران بارکران:", usersDatabase.length);
+    } catch (error) {
+      console.error("❌ هەڵە لە بارکردنی لیستەکە:", error);
     }
   }
-  loadUsers();
 
-  // چوونەژوورەوە
-  document.getElementById('loginBtn').addEventListener('click', async () => {
-    const u = document.getElementById('loginUser').value.trim();
-    const p = document.getElementById('loginPass').value.trim();
-    const msg = document.getElementById('loginMsg');
+  loadUsersFromGoogleSheet();
 
-    if (!u || !p) {
-      msg.className = 'msg show err';
-      msg.textContent = '⚠️ ناوی بەکارهێنەر و پاسۆرد پڕبکەرەوە';
+  /* ============================================================
+     چوونەژوورەوە
+     ============================================================ */
+  const loginBtn = document.getElementById('loginBtn');
+  const loginMsg = document.getElementById('loginMsg');
+
+  loginBtn.addEventListener('click', async () => {
+    const userVal = document.getElementById('loginUser').value.trim();
+    const passVal = document.getElementById('loginPass').value.trim();
+
+    if (!userVal || !passVal) {
+      loginMsg.className = 'msg err';
+      loginMsg.textContent = '⚠️ تکایە ناوی بەکارهێنەر و پاسۆرد پڕبکەرەوە.';
       return;
     }
 
-    if (users.length === 0) await loadUsers();
+    // دوگمەکە قفڵ بکە
+    loginBtn.disabled = true;
+    loginBtn.innerHTML = '<span class="spinner"></span> چاوەڕوان بە...';
 
-    const found = users.find(x => x.username.toLowerCase() === u.toLowerCase() && x.password === p);
-
-    if (found) {
-      localStorage.setItem("userLoggedIn", "true");
-      localStorage.setItem("activeUser", found.username);
-      msg.className = 'msg show ok';
-      msg.textContent = '✅ چوونەژوورەوە سەرکەوتوو بوو...';
-      setTimeout(() => window.location.replace(HOME_PAGE), 700);
-    } else {
-      msg.className = 'msg show err';
-      msg.textContent = '❌ ناوی بەکارهێنەر یان پاسۆرد هەڵەیە';
+    // ئەگەر داتابەیس بەتاڵە، دووبارە باربکە
+    if (usersDatabase.length === 0) {
+      await loadUsersFromGoogleSheet();
     }
+
+    const validUser = usersDatabase.find(u => 
+      u.username.toLowerCase() === userVal.toLowerCase() && 
+      u.password === passVal
+    );
+
+    setTimeout(() => {
+      loginBtn.disabled = false;
+      loginBtn.innerHTML = 'چوونەژوورەوە ←';
+
+      if (validUser) {
+        localStorage.setItem("userLoggedIn", "true");
+        localStorage.setItem("activeUser", validUser.username);
+        loginMsg.className = 'msg ok';
+        loginMsg.textContent = '✅ بەسەرکەوتوویی چوونەژوورەوە! دەگوازرێیتەوە...';
+        setTimeout(() => {
+          window.location.replace(HOME_PAGE);
+        }, 800);
+      } else {
+        loginMsg.className = 'msg err';
+        loginMsg.textContent = '❌ ناوی بەکارهێنەر یان پاسۆرد هەڵەیە!';
+      }
+    }, 600);
   });
 
-  // Enter بۆ لۆگین
+  // Enter بۆ چوونەژوورەوە
   document.getElementById('loginPass').addEventListener('keypress', e => {
-    if (e.key === 'Enter') document.getElementById('loginBtn').click();
+    if (e.key === 'Enter') loginBtn.click();
+  });
+  document.getElementById('loginUser').addEventListener('keypress', e => {
+    if (e.key === 'Enter') document.getElementById('loginPass').focus();
   });
 
-  // خۆتۆمارکردن
-  document.getElementById('registerBtn').addEventListener('click', async () => {
+  /* ============================================================
+     خۆتۆمارکردن
+     ============================================================ */
+  const registerBtn = document.getElementById('registerBtn');
+  const registerMsg = document.getElementById('registerMsg');
+
+  registerBtn.addEventListener('click', async () => {
     const name = document.getElementById('regName').value.trim();
     const phone = document.getElementById('regPhone').value.trim();
     const branch = document.getElementById('regBranch').value;
     const username = document.getElementById('regUsername').value.trim();
-    const msg = document.getElementById('registerMsg');
-    const btn = document.getElementById('registerBtn');
 
+    // پشکنینی خانەکان
     if (!name || !phone || !branch || !username) {
-      msg.className = 'msg show err';
-      msg.textContent = '⚠️ هەموو خانەکان پڕبکەرەوە';
+      registerMsg.className = 'msg err';
+      registerMsg.textContent = '⚠️ تکایە هەموو خانەکان پڕبکەرەوە.';
       return;
     }
 
+    // پشکنینی ژمارەی مۆبایل (07XXXXXXXXX)
     if (!/^07\d{9}$/.test(phone)) {
-      msg.className = 'msg show err';
-      msg.textContent = '⚠️ ژمارەکە دەبێت بە شێوەی 07XXXXXXXXX بێت';
+      registerMsg.className = 'msg err';
+      registerMsg.textContent = '⚠️ ژمارەی مۆبایل دەبێت بە شێوەی 07XXXXXXXXX بێت (11 ژمارە).';
       return;
     }
 
-    btn.disabled = true;
-    btn.textContent = 'دەنێردرێت...';
+    // پشکنینی ناوی بەکارهێنەر (تەنها ئینگلیزی و ژمارە)
+    if (!/^[a-zA-Z0-9_]{3,20}$/.test(username)) {
+      registerMsg.className = 'msg err';
+      registerMsg.textContent = '⚠️ ناوی بەکارهێنەر دەبێت 3-20 پیت بێت (تەنها ئینگلیزی و ژمارە).';
+      return;
+    }
+
+    // پشکنین ئەگەر ناوی بەکارهێنەر پێشتر هەبێت
+    if (usersDatabase.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+      registerMsg.className = 'msg err';
+      registerMsg.textContent = '⚠️ ئەم ناوی بەکارهێنەر پێشتر بەکارهێنراوە. ناوێکی تر هەڵبژێرە.';
+      return;
+    }
+
+    // دوگمە قفڵ بکە
+    registerBtn.disabled = true;
+    registerBtn.innerHTML = '<span class="spinner"></span> دەنێردرێت...';
 
     try {
-      // ناردن بۆ Google Apps Script
-      const form = new URLSearchParams();
-      form.append('name', name);
-      form.append('phone', phone);
-      form.append('branch', branch);
-      form.append('username', username);
+      // ناردنی داتا بۆ Google Apps Script
+      const formData = new URLSearchParams();
+      formData.append('name', name);
+      formData.append('phone', phone);
+      formData.append('branch', branch);
+      formData.append('username', username);
 
-      await fetch(API_URL, {
+      const response = await fetch(REGISTER_API_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: form.toString()
+        body: formData.toString()
       });
 
       // پیشاندانی شاشەی سەرکەوتن
-      document.getElementById('mainCard').innerHTML = `
-        <div class="success-box">
-          <div class="icon">✓</div>
-          <h2>داواکارییەکەت نێردرا!</h2>
-          <p>بەڕێوەبەر داتاکانت وەردەگرێت<br>و پاسۆردەکەت بۆ دەنێردرێت لەسەر:</p>
-          <div class="phone-show">${phone}</div>
-          <p style="font-size:13px;">دوای وەرگرتنی پاسۆرد، بگەڕێوە و بچۆ ژوورەوە.</p>
-          <button class="btn" onclick="location.reload()" style="margin-top:16px;">گەڕانەوە</button>
-        </div>
-      `;
+      showSuccessScreen(name, phone);
 
     } catch (err) {
-      msg.className = 'msg show err';
-      msg.textContent = '❌ هەڵە ڕوویدا. دووبارە هەوڵبدەوە';
-      btn.disabled = false;
-      btn.textContent = 'ناردنی داواکاری';
+      console.error(err);
+      registerMsg.className = 'msg err';
+      registerMsg.textContent = '❌ هەڵەیەک ڕوویدا. تکایە دووبارە هەوڵبدەوە.';
+      registerBtn.disabled = false;
+      registerBtn.innerHTML = 'ناردنی داواکاری 📨';
     }
   });
 
-  // تەنها ژمارە
+  // پشکنینی ژمارە لە کاتی نووسین
   document.getElementById('regPhone').addEventListener('input', e => {
     e.target.value = e.target.value.replace(/[^0-9]/g, '');
   });
+
+  /* ============================================================
+     شاشەی سەرکەوتن
+     ============================================================ */
+  function showSuccessScreen(name, phone) {
+    document.querySelector('.auth-card').innerHTML = `
+      <div class="success-screen">
+        <div class="check-icon">✓</div>
+        <h2>داواکارییەکەت نێردرا!</h2>
+        <p>بەڕێوەبەر داتاکانت وەردەگرێت و<br>پاسۆردەکەت بۆ دەنێردرێت لەسەر ژمارەکەت:</p>
+        <div class="phone-box" dir="ltr">${phone}</div>
+        <p style="font-size:13px;">دوای وەرگرتنی پاسۆرد، بگەڕێوە بۆ "چوونەژوورەوە" و بچۆ ژوورەوە.</p>
+        <button class="auth-btn" style="margin-top:20px;" onclick="location.reload()">گەڕانەوە بۆ لاپەڕەی سەرەکی</button>
+      </div>
+    `;
+  }
 </script>
 
 </body>
