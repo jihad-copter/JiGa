@@ -2009,15 +2009,19 @@ function removeDept(band, index) {
 }
 
 function addMoreDept(band) {
-  const currentlyDisplayedNames = new Set();
-  Object.values(DISPLAYED_BANDS).forEach(arr => arr.forEach(d => currentlyDisplayedNames.add(d.name)));
+  const currentlyDisplayedKeys = new Set();
+  Object.values(DISPLAYED_BANDS).forEach(arr => arr.forEach(d => {
+    const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
+    currentlyDisplayedKeys.add(key);
+  }));
 
   let candidates = [];
   for (const dept of DEPARTMENTS) {
-    if (currentlyDisplayedNames.has(dept.name)) continue;
+    const scList = getScoredDepartmentObjects(dept, CURRENT_STUDENT);
+    for (const sc of scList) {
+      const key = sc.name + '|' + (sc.session || '') + '|' + (sc.track || '');
+      if (currentlyDisplayedKeys.has(key)) continue;
 
-    const sc = getScoredDepartmentObject(dept, CURRENT_STUDENT);
-    if (sc) {
       if (band === 'reach' && sc.diff > 0) candidates.push(sc);
       else if (band === 'match' && sc.diff <= 3 && sc.diff >= -3) candidates.push(sc);
       else if (band === 'safety' && sc.diff < 0) candidates.push(sc);
@@ -2025,17 +2029,14 @@ function addMoreDept(band) {
   }
 
   if (candidates.length === 0) {
-    alert(`هیچ بەشێکی تر لە داتابەیسدا نەماوە بۆ زیادکردن بۆ ئەم زۆنە.`);
+    alert('هیچ بەشێکی تر لە داتابەیسدا نەماوە بۆ زیادکردن بۆ ئەم زۆنە.');
     return;
   }
 
   candidates.sort(multiCriteriaSorter);
-
-  const nextDept = candidates[0];
-  DISPLAYED_BANDS[band].push(nextDept);
+  DISPLAYED_BANDS[band].push(candidates[0]);
   renderResultsUI();
 }
-
 let draggedBand = null;
 let dragSrcIndex = null;
 
