@@ -29,7 +29,7 @@
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  html { -webkit-text-size-adjust: 100%; }
+  html{ -webkit-text-size-adjust: 100%; }
   body{
     background:var(--paper);
     color:var(--ink);
@@ -49,9 +49,8 @@
     align-items:center;
     justify-content:space-between;
     border-bottom:3px solid var(--brass);
-    gap: 12px;
   }
-  .brand{ display:flex; align-items:baseline; gap:14px; flex-wrap: wrap; }
+  .brand{ display:flex; align-items:baseline; gap:14px;}
   .brand .mark{
     font-family:'Noto Naskh Arabic',serif;
     font-size:26px;
@@ -94,7 +93,6 @@
     padding:34px 20px;
     cursor:pointer;
     transition:border-color .15s, background .15s;
-    display: block;
   }
   .drop:hover, .drop.drag{ border-color:var(--brass); background:#FBF8F0; }
   .drop input{ display:none; }
@@ -144,7 +142,6 @@
   .seg button{
     flex:1; padding:8px 4px; background:#FCFBF7; border:none; border-left:1px solid #CBCABB;
     font-family:inherit; font-size:12.5px; cursor:pointer; color:var(--ink-soft);
-    transition: background .15s;
   }
   .seg button:first-child{ border-left:none; }
   .seg button.active{ background:var(--ink); color:#EFE8D8; font-weight:700; }
@@ -152,7 +149,6 @@
   .chip{
     padding:6px 11px; border:1px solid #CBCABB; border-radius:20px; font-size:12px;
     cursor:pointer; background:#FCFBF7; color:var(--ink-soft); user-select:none;
-    transition: .15s;
   }
   .chip.on{ background:var(--brass); border-color:var(--brass); color:#fff; font-weight:700; }
   .hint{ font-size:11px; color:#9a998c; margin-top:5px; }
@@ -168,14 +164,13 @@
   }
 
   /* ---------- results & table ---------- */
-  .results-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; gap: 10px; }
+  .results-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; gap:10px;}
   .results-head h2{ font-size:21px; margin:0; }
   .results-head .meta{ font-size:12.5px; color:var(--ink-soft); margin-top:4px; }
   .print-btn{
     background:var(--card); border:1px solid var(--ink); color:var(--ink);
     padding:9px 18px; border-radius:3px; font-size:13px; font-weight:700; cursor:pointer;
     font-family:'Noto Sans Arabic',sans-serif;
-    white-space: nowrap;
   }
   .print-btn:hover{ background:var(--ink); color:#EFE8D8; }
 
@@ -195,15 +190,14 @@
   .band.safety{ color:var(--safety); }
   .band-desc{ font-size:12px; color:var(--ink-soft); margin:-4px 0 12px; }
 
-  /* 🆕 پاکەتی Scroll بۆ خشتە لەسەر مۆبایل */
-  .table-scroll {
+  /* 📊 خشتە — wrapper بۆ scroll */
+  .table-scroll{
+    width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin: 0 -4px;
-    padding: 0 4px;
+    border-radius: 3px;
   }
 
-  /* ڕێکخستنی بنەڕەتی خشتە */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -293,32 +287,48 @@
    ============================================================ */
 
 /* 🔵 زانکۆلاین — تەواوی ڕیزە شین */
-tbody tr.row-zankoline { background: #DBEAFE !important; }
-tbody tr.row-zankoline:hover { background: #BFDBFE !important; }
+tbody tr.row-zankoline {
+  background: #DBEAFE !important;
+}
+tbody tr.row-zankoline:hover {
+  background: #BFDBFE !important;
+}
 tbody tr.row-zankoline td {
   color: #1E40AF;
   border-color: #93C5FD !important;
 }
 
 /* 🟠 پارالێڵ — تەواوی ڕیزە پرتەقاڵی */
-tbody tr.row-parallel { background: #FFEDD5 !important; }
-tbody tr.row-parallel:hover { background: #FED7AA !important; }
+tbody tr.row-parallel {
+  background: #FFEDD5 !important;
+}
+tbody tr.row-parallel:hover {
+  background: #FED7AA !important;
+}
 tbody tr.row-parallel td {
   color: #9A3412;
   border-color: #FDBA74 !important;
 }
 
 /* 🟣 ئێواران — تەواوی ڕیزە مۆر */
-tbody tr.row-evening { background: #EDE9FE !important; }
-tbody tr.row-evening:hover { background: #DDD6FE !important; }
+tbody tr.row-evening {
+  background: #EDE9FE !important;
+}
+tbody tr.row-evening:hover {
+  background: #DDD6FE !important;
+}
 tbody tr.row-evening td {
   color: #5B21B6;
   border-color: #C4B5FD !important;
 }
 
 /* 🟢 بەیانی — تەواوی ڕیزە سەوز */
-tbody tr.row-morning { background: #DCFCE7 !important; }
-tbody tr.row-morning:hover { background: #BBF7D0 !important; }
+tbody tr.row-morning {
+  background: #DCFCE7 !important;
+}
+tbody tr.row-morning:hover {
+  background: #BBF7D0 !important;
+}
 tbody tr.row-morning td {
   color: #166534;
   border-color: #86EFAC !important;
@@ -333,7 +343,9 @@ tbody tr.row-morning td.name {
 }
 
 /* 👑 باجی ئەدمین */
-#adminBadge { animation: fadeInBadge 0.4s ease-out; }
+#adminBadge {
+  animation: fadeInBadge 0.4s ease-out;
+}
 @keyframes fadeInBadge {
   from { opacity: 0; transform: scale(0.8); }
   to { opacity: 1; transform: scale(1); }
@@ -361,7 +373,6 @@ input:disabled, select:disabled {
   .brand .mark { font-size: 22px; }
   .brand .tag { font-size: 11.5px; }
   .card { padding: 18px 18px; }
-  .upload-shell { margin: 40px auto; }
 }
 
 /* ---------- تابلێت بچووک / مۆبایل گەورە (≤ 900px) ---------- */
@@ -370,7 +381,7 @@ input:disabled, select:disabled {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  /* فۆرم دێتە سەرەوە بۆ ئاسانی بەکارهێنان */
+  /* فۆرم دەبێتە خوارەوە — sticky لادەبە */
   .form-card {
     position: static;
     order: -1;
@@ -386,13 +397,6 @@ input:disabled, select:disabled {
   }
   .stepper { font-size: 11.5px; }
   .logout-btn { padding: 5px 10px; font-size: 11px; }
-
-  /* خشتە بە scroll ئاسۆیی */
-  .table-scroll {
-    margin: 0 -14px;
-    padding: 0 14px;
-  }
-  table { min-width: 720px; }
 }
 
 /* ---------- مۆبایل (≤ 640px) ---------- */
@@ -419,7 +423,6 @@ input:disabled, select:disabled {
 
   /* کارتەکان */
   .card { padding: 14px 12px; border-radius: 3px; }
-  .upload-shell { margin: 24px auto; }
   .upload-card { padding: 26px 18px; }
   .upload-card h2 { font-size: 17px; }
   .upload-card p { font-size: 12.5px; }
@@ -429,7 +432,7 @@ input:disabled, select:disabled {
   .drop .main { font-size: 13.5px; }
   .drop .sub { font-size: 11px; }
 
-  .proceed-btn { padding: 11px 20px; font-size: 14px; width: 100%; }
+  .proceed-btn { padding: 11px 20px; font-size: 14px; }
 
   /* فۆرم */
   .form-card h3 { font-size: 15.5px; }
@@ -437,7 +440,7 @@ input:disabled, select:disabled {
   .field input[type=text],
   .field input[type=number],
   .field select {
-    padding: 10px 10px;
+    padding: 9px 10px;
     font-size: 14px;
   }
   /* iOS: نەهێڵە input zoom بکات */
@@ -447,8 +450,8 @@ input:disabled, select:disabled {
     .field select { font-size: 16px; }
   }
 
-  .seg button { padding: 9px 4px; font-size: 12px; }
-  .chip { padding: 7px 11px; font-size: 11.5px; }
+  .seg button { padding: 8px 4px; font-size: 12px; }
+  .chip { padding: 6px 10px; font-size: 11.5px; }
   .generate-btn { padding: 12px; font-size: 14px; }
 
   /* سەرەتای ئەنجامەکان */
@@ -459,7 +462,7 @@ input:disabled, select:disabled {
   }
   .results-head h2 { font-size: 18px; }
   .results-head .meta { font-size: 11.5px; }
-  .print-btn { width: 100%; padding: 11px; font-size: 13px; }
+  .print-btn { width: 100%; padding: 10px; font-size: 13px; }
 
   .band-head h3 { font-size: 14px; }
   .band-head .count { font-size: 11px; }
@@ -472,7 +475,7 @@ input:disabled, select:disabled {
   }
   table {
     font-size: 11px;
-    min-width: 700px;
+    min-width: 720px;
   }
   thead th { padding: 7px 3px; font-size: 10px; }
   tbody td { padding: 7px 3px; font-size: 10.5px; }
@@ -489,7 +492,7 @@ input:disabled, select:disabled {
   .col-session { width: 70px; }
   .col-action { width: 40px; }
 
-  .add-more-btn { font-size: 11.5px; padding: 9px 12px; }
+  .add-more-btn { font-size: 11.5px; padding: 8px 12px; }
 
   .footer { font-size: 11px; padding: 18px 12px; }
 }
@@ -501,28 +504,26 @@ input:disabled, select:disabled {
   .form-card h3 { font-size: 14px; }
   .seg button { font-size: 11px; padding: 7px 2px; }
   table { min-width: 660px; font-size: 10.5px; }
-  .upload-card { padding: 20px 14px; }
 }
 
-/* ---------- Touch targets بۆ ئامێرەکانی touch ---------- */
+/* ---------- Touch devices: targets گەورەتر ---------- */
 @media (hover: none) and (pointer: coarse) {
   .chip, .seg button, .action-btn, .add-more-btn {
-    min-height: 38px;
+    min-height: 40px;
     touch-action: manipulation;
   }
   tr.draggable-row { touch-action: pan-y; }
-  tbody tr:hover { background: transparent; }
 }
 
   /* ---------- ڕێکخستنی تایبەتمەندی ڕاستەوخۆی PRINT ---------- */
   .report-header{ display:none; }
-
+  
   @media print{
     @page {
       size: A4 portrait;
       margin: 12mm 10mm 12mm 10mm;
     }
-
+    
   /* ✅ ڕەنگەکان لە چاپ بپارێزە */
   * {
     -webkit-print-color-adjust: exact !important;
@@ -561,7 +562,7 @@ input:disabled, select:disabled {
     .topbar, .form-card, .print-btn, .empty-state, .upload-shell, .reset-link, .add-more-btn, .fav-badge, .footer {
       display: none !important;
     }
-
+    
     .col-drag, .col-action, .drag-handle {
       display: none !important;
       width: 0 !important;
@@ -571,21 +572,22 @@ input:disabled, select:disabled {
     .layout{ display:block !important; }
     .card.results-card{ border:none !important; padding:0 !important; }
 
-    /* لە چاپ scroll نەبێت */
+    /* ✅ لە چاپدا scroll نەهێڵە — خشتەکە تەواو دەربکەوێت */
     .table-scroll {
       overflow: visible !important;
-      margin: 0 !important;
+      width: 100% !important;
       padding: 0 !important;
+      margin: 0 !important;
     }
-
+    
     .report-header{
       display:block !important; margin-bottom:15px; border-bottom:2px solid #142235; padding-bottom:8px;
     }
     .report-header h1{ font-size:17px; margin:0 0 6px; text-align:center; }
     .report-info{ display:flex; flex-wrap:wrap; gap:15px; font-size:11px; justify-content:center; }
-
+    
     .band{ break-inside:avoid; margin-bottom:20px; }
-
+    
     table{
       width: 100% !important;
       table-layout: fixed !important;
@@ -595,7 +597,7 @@ input:disabled, select:disabled {
     }
     thead{ display:table-header-group !important; }
     tr{ break-inside:avoid !important; }
-
+    
     thead th, tbody td {
       border: 1px solid #888 !important;
       padding: 5px 3px !important;
@@ -697,7 +699,7 @@ input:disabled, select:disabled {
 
       <div class="field">
         <label>کۆی گشتی نمرە (معدەل)</label>
-        <input type="number" id="fScore" placeholder="نموونە: 85.5" step="0.01" min="50" max="100" inputmode="decimal">
+        <input type="number" id="fScore" placeholder="نموونە: 85.5" step="0.01" min="50" max="100">
       </div>
 
       <div class="field">
