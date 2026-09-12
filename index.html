@@ -323,9 +323,6 @@
     line-height: 1.6;
   }
 
-  /* ============================================================
-     👤 / 👑 کارتەکانی جۆری ئەکاونت
-     ============================================================ */
   .role-cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -405,8 +402,158 @@
     direction: rtl;
   }
 
+  /* ============================================================
+     📱 ڕیسپۆنسیڤ بۆ مۆبایل و تابلێت
+     ============================================================ */
+
+  @media (max-width: 600px) {
+    body {
+      padding: 12px;
+      align-items: flex-start;
+      padding-top: 24px;
+    }
+
+    .auth-card {
+      padding: 28px 18px;
+      border-radius: 16px;
+    }
+
+    .logo-badge {
+      width: 60px;
+      height: 60px;
+      font-size: 28px;
+      border-radius: 16px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+    }
+
+    .tagline {
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tabs {
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      font-size: 12.5px;
+      padding: 9px 6px;
+    }
+
+    .auth-field {
+      margin-bottom: 13px;
+    }
+
+    .auth-field label {
+      font-size: 12px;
+    }
+
+    .auth-field input,
+    .auth-field select {
+      padding: 10px 38px 10px 12px;
+      font-size: 13px;
+      border-radius: 9px;
+    }
+
+    .auth-btn {
+      padding: 12px;
+      font-size: 14px;
+      border-radius: 9px;
+    }
+
+    .msg {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+
+    .helper-note {
+      font-size: 11px;
+      margin-top: 14px;
+      padding-top: 12px;
+    }
+
+    .device-warning {
+      font-size: 11.5px;
+      padding: 8px 12px;
+    }
+
+    .role-cards {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .role-card {
+      padding: 12px 10px;
+    }
+
+    .role-card .role-icon {
+      font-size: 24px;
+    }
+
+    .role-card .role-title {
+      font-size: 14px;
+    }
+
+    .role-card .role-price {
+      font-size: 11.5px;
+      padding: 2px 8px;
+    }
+
+    .role-card .role-desc {
+      font-size: 10px;
+    }
+
+    .success-screen .check-icon {
+      width: 65px;
+      height: 65px;
+      font-size: 34px;
+    }
+
+    .success-screen h2 {
+      font-size: 18px;
+    }
+
+    .success-screen p {
+      font-size: 13px;
+    }
+
+    .phone-box {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+
   @media (max-width: 400px) {
-    .role-cards { grid-template-columns: 1fr; }
+    .auth-card {
+      padding: 22px 14px;
+    }
+
+    .logo-text {
+      font-size: 19px;
+    }
+
+    .tagline {
+      font-size: 11px;
+    }
+
+    .tab-btn {
+      font-size: 11.5px;
+      padding: 8px 4px;
+    }
+
+    .auth-field input,
+    .auth-field select {
+      padding: 9px 34px 9px 10px;
+      font-size: 12.5px;
+    }
+
+    .auth-btn {
+      padding: 11px;
+      font-size: 13px;
+    }
   }
 </style>
 </head>
