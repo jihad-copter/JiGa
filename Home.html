@@ -344,35 +344,39 @@ td.session-cell {
   padding: 4px 8px !important;
 }
 
-/* زانکۆلاین — شین */
+/* ============================================================
+   🎨 ڕەنگی جۆری خوێندن (Session)
+   ============================================================ */
+td.session-cell {
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 4px 8px !important;
+}
+
 td.session-cell.session-zankoline {
   background: #DBEAFE;
   color: #1E40AF;
   border: 1px solid #93C5FD;
 }
 
-/* پارالێڵ — پرتەقاڵی */
 td.session-cell.session-parallel {
   background: #FFEDD5;
   color: #9A3412;
   border: 1px solid #FDBA74;
 }
 
-/* ئێواران — مۆر */
 td.session-cell.session-evening {
   background: #EDE9FE;
   color: #5B21B6;
   border: 1px solid #C4B5FD;
 }
 
-/* بەیانی ئاسایی — سەوز */
 td.session-cell.session-morning {
   background: #DCFCE7;
   color: #166534;
   border: 1px solid #86EFAC;
 }
 
-/* بۆ چاپکردن، ڕەنگەکان بسڕدرێنەوە */
 @media print {
   td.session-cell {
     background: transparent !important;
@@ -381,7 +385,6 @@ td.session-cell.session-morning {
   }
 }
 
-/* 👑 باجی ئەدمین */
 #adminBadge {
   animation: fadeInBadge 0.4s ease-out;
 }
@@ -390,7 +393,6 @@ td.session-cell.session-morning {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* 🔒 خانە داخراوەکان */
 input:disabled, select:disabled {
   background: #F1F5F9 !important;
   cursor: not-allowed !important;
@@ -546,6 +548,9 @@ input:disabled, select:disabled {
 <script>
   /* ============================================================
    🔒 داتای بەکارهێنەر و ڕۆڵ (Role)
+   ============================================================ */
+/* ============================================================
+   🔒 داتای بەکارهێنەر و ڕۆڵ
    ============================================================ */
 const ACTIVE_USER = {
   username: localStorage.getItem("activeUser") || "",
@@ -1029,14 +1034,10 @@ function populateFormOptions(){
     el.addEventListener('click', ()=>{ el.classList.toggle('on'); toggleSet(selProvs, el.textContent); });
   });
 
-  // ============================================================
-  // ✅ زیادکرا: بەپێی Role، خانەکان ڕێک بخە
-  // ============================================================
   const nameInput = document.getElementById('fName');
   const scoreInput = document.getElementById('fScore');
 
   if (IS_ADMIN) {
-    // 👑 ئەدمین — دەتوانێت بگۆڕێت
     nameInput.disabled = false;
     nameInput.style.background = '#FFFBEB';
     nameInput.style.cursor = 'text';
@@ -1052,7 +1053,6 @@ function populateFormOptions(){
 
     showAdminBadge();
   } else {
-    // 👤 خوێندکار — ناگۆڕدرێت
     if (ACTIVE_USER.name) {
       nameInput.value = ACTIVE_USER.name;
       nameInput.disabled = true;
@@ -1066,7 +1066,6 @@ function populateFormOptions(){
     }
   }
 
-  // ✅ هەڵبژاردنی لقی خوێندن بە شێوەی خۆکار
   if (ACTIVE_USER.branch) {
     document.querySelectorAll('#segBranch button').forEach(b => {
       b.classList.remove('active');
@@ -1076,7 +1075,6 @@ function populateFormOptions(){
   }
 }
 
-/* ✅ پیشاندانی باجی ئەدمین */
 function showAdminBadge() {
   const topbarRight = document.querySelector('.topbar-right');
   if (topbarRight && !document.getElementById('adminBadge')) {
@@ -1120,7 +1118,6 @@ document.getElementById('genBtn').addEventListener('click', ()=>{
   let name, score;
 
   if (IS_ADMIN) {
-    // 👑 ئەدمین — لە خانەکان بخوێنەرەوە
     name = document.getElementById('fName').value.trim() || 'خوێندکار';
     score = parseFloat(document.getElementById('fScore').value);
 
@@ -1129,7 +1126,6 @@ document.getElementById('genBtn').addEventListener('click', ()=>{
       return;
     }
   } else {
-    // 👤 خوێندکار — لە ACTIVE_USER وەربگرە
     name = ACTIVE_USER.name || 'خوێندکار';
     score = ACTIVE_USER.score;
 
@@ -1156,7 +1152,8 @@ document.getElementById('genBtn').addEventListener('click', ()=>{
   const {bands, totalCandidates} = runMatching(student, DEPARTMENTS);
   renderResults(student, bands, totalCandidates);
 });
-const BAND_META = {
+  
+  const BAND_META = {
   reach:{title:'دەستەی بەشەکانی سەرەوە (نمرەی بەشەکە لە معدەلەکەت بەرزترە)', desc:'ئەو بەشانەی نمرەی ساڵی پاریان لە معدەلی تۆ زیاتر بووە (ڕێکخراو بەپێی دڵخوازی و نمرە)'},
   match:{title:'دەستەی بەشەکانی ناوەڕاست (نمرەکەی وەکو معدەلەکەتە یان کەمێک زیاترە)', desc:'ئەو بەشانەی نمرەی ساڵی پاریان زۆر نزیک بووە لە معدەلی تۆ (ڕێکخراو بەپێی دڵخوازی و نمرە)'},
   safety:{title:'دەستەی بەشەکانی دڵنیاکەرەوە (کەمتر لە معدەلەکەت)', desc:'بەشە دڵنیاکەرەوەکان کاتێک نمرەکەت لە نمرەی بەشەکە بەرزتر بێت (ڕێکخراو بەپێی دڵخوازی و نمرە)'},
@@ -1290,8 +1287,6 @@ function renderResultsUI() {
     items.forEach((it, idx) => {
       const rowCls = it.isFav ? 'fav-row' : '';
       const favBadge = it.isFav ? `<span class="fav-badge">★ دڵخواز</span>` : '';
-      
-      // ✅ زیادکرا: دیاریکردنی ڕەنگی جۆری خوێندن
       const sessionCls = getSessionClass(it.track, it.session);
       
       html += `<tr class="draggable-row ${rowCls}" draggable="true" data-band="${band}" data-index="${idx}">
@@ -1318,7 +1313,6 @@ function renderResultsUI() {
   setupDragAndDrop();
 }
 
-/* ✅ فەنکشنی نوێ: دیاریکردنی کلاسی ڕەنگ بەپێی track و session */
 function getSessionClass(track, session) {
   const t = (track || '').toString();
   const s = (session || '').toString();
@@ -1329,6 +1323,7 @@ function getSessionClass(track, session) {
   if (s.includes('بەیانی')) return 'session-morning';
   return '';
 }
+  
   document.getElementById('resultsBody').innerHTML = html;
   setupDragAndDrop();
 }
