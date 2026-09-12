@@ -450,20 +450,22 @@
   }
 
   function saveSession(data) {
-    const session = {
-      username: data.username,
-      deviceId: data.deviceId,
-      token: data.token,
-      loginTime: Date.now(),
-      lastActive: Date.now()
-    };
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-    localStorage.setItem("userLoggedIn", "true");
-    localStorage.setItem("activeUser", data.username);
-    localStorage.setItem("activeName", data.name || "");
-    localStorage.setItem("activeBranch", data.branch || "");
-    localStorage.setItem("activeScore", data.score || "");
-  }
+  const session = {
+    username: data.username,
+    deviceId: data.deviceId,
+    token: data.token,
+    role: data.role || "student",  // ✅ زیادکرا
+    loginTime: Date.now(),
+    lastActive: Date.now()
+  };
+  localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+  localStorage.setItem("userLoggedIn", "true");
+  localStorage.setItem("activeUser", data.username);
+  localStorage.setItem("activeName", data.name || "");
+  localStorage.setItem("activeBranch", data.branch || "");
+  localStorage.setItem("activeScore", data.score || "");
+  localStorage.setItem("activeRole", data.role || "student");  // ✅ زیادکرا
+}
 
   function updateSessionActivity() {
     const s = getSession();
@@ -568,14 +570,15 @@
       });
 
       if (result.result === "success") {
-        saveSession({
-          username: result.user.username,
-          name: result.user.name,
-          branch: result.user.branch,
-          score: result.user.score,
-          deviceId: deviceId,
-          token: result.token
-        });
+       saveSession({
+    username: result.user.username,
+    name: result.user.name,
+    branch: result.user.branch,
+    score: result.user.score,
+    deviceId: deviceId,
+    token: result.token,
+    role: result.user.role || "student"  // ✅ زیادکرا
+  });
 
         loginMsg.className = 'msg ok';
         loginMsg.textContent = '✅ بەسەرکەوتوویی چوونەژوورەوە! دەگوازرێیتەوە...';
