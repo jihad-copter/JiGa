@@ -425,31 +425,23 @@
       border-radius: 16px;
     }
 
-    .logo-text {
-      font-size: 22px;
-    }
+    .logo-text { font-size: 22px; }
 
     .tagline {
       font-size: 12px;
       margin-bottom: 20px;
     }
 
-    .tabs {
-      margin-bottom: 18px;
-    }
+    .tabs { margin-bottom: 18px; }
 
     .tab-btn {
       font-size: 12.5px;
       padding: 9px 6px;
     }
 
-    .auth-field {
-      margin-bottom: 13px;
-    }
+    .auth-field { margin-bottom: 13px; }
 
-    .auth-field label {
-      font-size: 12px;
-    }
+    .auth-field label { font-size: 12px; }
 
     .auth-field input,
     .auth-field select {
@@ -485,26 +477,12 @@
       gap: 8px;
     }
 
-    .role-card {
-      padding: 12px 10px;
-    }
+    .role-card { padding: 12px 10px; }
 
-    .role-card .role-icon {
-      font-size: 24px;
-    }
-
-    .role-card .role-title {
-      font-size: 14px;
-    }
-
-    .role-card .role-price {
-      font-size: 11.5px;
-      padding: 2px 8px;
-    }
-
-    .role-card .role-desc {
-      font-size: 10px;
-    }
+    .role-card .role-icon { font-size: 24px; }
+    .role-card .role-title { font-size: 14px; }
+    .role-card .role-price { font-size: 11.5px; padding: 2px 8px; }
+    .role-card .role-desc { font-size: 10px; }
 
     .success-screen .check-icon {
       width: 65px;
@@ -512,13 +490,8 @@
       font-size: 34px;
     }
 
-    .success-screen h2 {
-      font-size: 18px;
-    }
-
-    .success-screen p {
-      font-size: 13px;
-    }
+    .success-screen h2 { font-size: 18px; }
+    .success-screen p { font-size: 13px; }
 
     .phone-box {
       font-size: 14px;
@@ -527,22 +500,10 @@
   }
 
   @media (max-width: 400px) {
-    .auth-card {
-      padding: 22px 14px;
-    }
-
-    .logo-text {
-      font-size: 19px;
-    }
-
-    .tagline {
-      font-size: 11px;
-    }
-
-    .tab-btn {
-      font-size: 11.5px;
-      padding: 8px 4px;
-    }
+    .auth-card { padding: 22px 14px; }
+    .logo-text { font-size: 19px; }
+    .tagline { font-size: 11px; }
+    .tab-btn { font-size: 11.5px; padding: 8px 4px; }
 
     .auth-field input,
     .auth-field select {
@@ -550,10 +511,7 @@
       font-size: 12.5px;
     }
 
-    .auth-btn {
-      padding: 11px;
-      font-size: 13px;
-    }
+    .auth-btn { padding: 11px; font-size: 13px; }
   }
 </style>
 </head>
@@ -646,7 +604,7 @@
         </div>
       </div>
 
-      <!-- ✅ هەڵبژاردنی جۆری ئەکاونت -->
+      <!-- هەڵبژاردنی جۆری ئەکاونت -->
       <div class="auth-field">
         <label>جۆری ئەکاونت <span class="req">*</span></label>
         <div class="role-cards" id="roleCards">
@@ -663,7 +621,7 @@
           <div class="role-card" data-role="admin">
             <div class="role-icon">👑</div>
             <div class="role-title">ئەدمین</div>
-            <div class="role-price"> ١٠٠,٠٠٠ دینار لەڕێگەی FastPay یان بالانسەوە(٠٧٥٠١٦٩٦٤٩٩)</div>
+            <div class="role-price">١٠٠,٠٠٠ دینار لەڕێگەی FastPay یان بالانسەوە(٠٧٥٠١٦٩٦٤٩٩)</div>
             <div class="role-desc">
               • دەستکاری ناو و معدل (بۆخوێندکاری جیاواز)<br>
               • دەستکاری داتای خوێندکاران<br>
@@ -684,15 +642,9 @@
 </div>
 
 <script>
-  /* ============================================================
-     ⚙️ ڕێکخستنەکان
-     ============================================================ */
   const HOME_PAGE = "Home.html";
   const API_URL = "https://script.google.com/macros/s/AKfycby8n7BNVatXcCQ3-JHza5hQAA67HPqeoZyGMOH_pJ3DqtY4p4v_tLHwVKexazyPLbm4/exec";
 
-  /* ============================================================
-     🔐 Session Lock
-     ============================================================ */
   const SESSION_KEY = "jiga_session";
   const SESSION_TIMEOUT = 30 * 60 * 1000;
 
@@ -740,9 +692,6 @@
     window.location.replace(HOME_PAGE);
   }
 
-  /* ============================================================
-     📱 Device Fingerprint
-     ============================================================ */
   async function getDeviceFingerprint() {
     const data = [
       navigator.userAgent,
@@ -768,9 +717,6 @@
     return 'fb_' + Math.abs(h).toString(16) + '_' + data.length;
   }
 
-  /* ============================================================
-     🌐 ناردنی داواکاری
-     ============================================================ */
   async function callApi(params) {
     const body = new URLSearchParams(params).toString();
     const response = await fetch(API_URL, {
@@ -782,9 +728,6 @@
     return response.json();
   }
 
-  /* ============================================================
-     تابەکان
-     ============================================================ */
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -798,9 +741,6 @@
     });
   });
 
-  /* ============================================================
-     👤 / 👑 هەڵبژاردنی جۆری ئەکاونت
-     ============================================================ */
   let selectedRole = "student";
 
   document.querySelectorAll('#roleCards .role-card').forEach(card => {
@@ -811,9 +751,6 @@
     });
   });
 
-  /* ============================================================
-     🔑 چوونەژوورەوە
-     ============================================================ */
   const loginBtn = document.getElementById('loginBtn');
   const loginMsg = document.getElementById('loginMsg');
 
@@ -872,9 +809,6 @@
     if (e.key === 'Enter') loginBtn.click();
   });
 
-  /* ============================================================
-     📝 خۆتۆمارکردن
-     ============================================================ */
   const registerBtn = document.getElementById('registerBtn');
   const registerMsg = document.getElementById('registerMsg');
 
@@ -956,9 +890,6 @@
     }
   });
 
-  /* ============================================================
-     ✅ شاشەی سەرکەوتن
-     ============================================================ */
   function showSuccessScreen(name, phone, role) {
     const roleText = role === "admin" ? "👑 ئەدمین" : "👤 خوێندکار";
     const priceText = role === "admin" ? "١٠٠,٠٠٠ دینار" : "٥,٠٠٠ دینار";
