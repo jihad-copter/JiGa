@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
-  // پشکنین: ئەگەر بەکارهێنەر لۆگئینی نەکردبێت، ڕاستەوخۆ دەینێرێتەوە بۆ پەیجی index.html
   if (localStorage.getItem("userLoggedIn") !== "true") {
     window.location.href = "index.html";
   }
@@ -119,6 +118,7 @@
 
   /* ---------- main layout ---------- */
   .layout{ display:grid; grid-template-columns: 1fr 380px; gap:26px; align-items:start; }
+  @media (max-width: 960px){ .layout{ grid-template-columns: 1fr; } }
 
   .card{
     background:var(--card); border:1px solid var(--line); border-radius:4px;
@@ -188,7 +188,6 @@
   .band.safety{ color:var(--safety); }
   .band-desc{ font-size:12px; color:var(--ink-soft); margin:-4px 0 12px; }
 
-  /* ڕێکخستنی بنەڕەتی خشتە */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -312,37 +311,19 @@
      📱 ڕیسپۆنسیڤ بۆ مۆبایل و تابلێت
      ============================================================ */
 
-  /* تابلێت */
   @media (max-width: 960px) {
-    .layout {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-    .form-card {
-      position: static;
-      order: -1;
-    }
-    .wrap {
-      padding: 18px 14px 60px;
-    }
-    .topbar {
-      padding: 12px 16px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+    .layout { grid-template-columns: 1fr; gap: 18px; }
+    .form-card { position: static; order: -1; }
+    .wrap { padding: 18px 14px 60px; }
+    .topbar { padding: 12px 16px; flex-wrap: wrap; gap: 10px; }
     .brand .mark { font-size: 20px; }
     .brand .tag { font-size: 11px; display: none; }
     .topbar-right { gap: 8px; }
     .stepper { font-size: 11px; }
     .logout-btn { padding: 5px 10px; font-size: 11px; }
-    .results-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
+    .results-head { flex-direction: column; align-items: flex-start; gap: 10px; }
     .print-btn { width: 100%; text-align: center; }
 
-    /* خشتە بۆ تابلێت — سکرۆڵی ئاسۆیی */
     .table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -351,7 +332,6 @@
     }
   }
 
-  /* مۆبایل */
   @media (max-width: 600px) {
     .upload-shell { margin: 20px auto; }
     .upload-card { padding: 24px 18px; }
@@ -376,7 +356,6 @@
     .results-head h2 { font-size: 17px; }
     .results-head .meta { font-size: 11.5px; }
 
-    /* خشتە بۆ مۆبایل — سکرۆڵی ئاسۆیی */
     .table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -410,7 +389,6 @@
     .report-info { font-size: 10px; gap: 8px; }
   }
 
-  /* مۆبایلی بچووک */
   @media (max-width: 400px) {
     .topbar { padding: 10px 12px; }
     .brand .mark { font-size: 17px; }
@@ -632,7 +610,7 @@
 
 <script>
 /* ============================================================
-   ⚙️ ڕێکخستنەکان و گۆڕاوەکان
+   🔓 گۆڕاوەکانی سەرەکی (Global)
    ============================================================ */
 const ACTIVE_USER = {
   username: localStorage.getItem('activeUser') || '',
@@ -643,7 +621,8 @@ const ACTIVE_USER = {
 };
 const IS_ADMIN = ACTIVE_USER.role === 'admin';
 
-const DEPARTMENTS_API_URL = 'https://script.google.com/macros/s/AKfycbx5ExVf__KUJ8xrM_MUwUxU7lHT4bMhRnkjX-Q4tXfNTF7KKFwLM9y3LqNJdxrj0RG-/exec';
+// ⚠️ URLـی ڕاستەقینە — لە کۆدە ڕەسەنەکەتەوە وەرگیراوە
+const DEPARTMENTS_API_URL = 'https://script.google.com/macros/s/AKfycbzZBMfFv1GdSmVDPU6Sm7pxU4TwCw1FkY4v1dVO4xgXQ8pU6yTHqZVj7yZwZ3lQZfQ_/exec';
 const DEPARTMENTS_API_KEY = 'oh9PTf05_HzIaHpJf9LhxTzjQoUx6LSa';
 
 /* ============================================================
@@ -661,6 +640,7 @@ function normArabic(str) {
     .replace(/ە/g, 'ه')
     .replace(/ۆ/g, 'و')
     .replace(/ڕ/g, 'ر')
+    .replace(/ددین/g, 'دین')
     .toLowerCase();
 }
 
@@ -677,15 +657,15 @@ const UNI_MAP = [
   ['زانکۆی سلێمانی', ['زانکۆی سلێمانی', 'سلێمانی', 'ز. سلێمانی', 'ز سلێمانی']],
   ['زانکۆی پۆلیتەکنیکی سلێمانی', ['پۆلیتەکنیکی سلێمانی', 'پۆ.سلێمانی', 'پۆ سلێمانی']],
   ['زانکۆی دهۆک', ['دهۆک', 'دهوك']],
-  ['زانکۆی پۆلیتەکنیکی دهۆک', ['پۆلیتەکنیکی دهۆک', 'پۆلیتەکنیکی دهۆک']],
+  ['زانکۆی پۆلیتەکنیکی دهۆک', ['پۆلیتەکنیکی دهۆک']],
   ['زانکۆی سۆران', ['سۆران']],
   ['زانکۆی ڕاپەڕین', ['ڕاپەڕین', 'راپەرین']],
-  ['زانکۆی هەولێری پزیشکی', ['هەولێری پزیشکی', 'هه‌ولێری پزیشکی', 'هەولێر پزیشکی']],
+  ['زانکۆی هەولێری پزیشکی', ['هەولێری پزیشکی', 'هه‌ولێری پزیشکی']],
   ['زانکۆی هەڵەبجە', ['هەڵەبجە', 'هه‌ڵه‌بجه']],
   ['زانکۆی زاخۆ', ['زاخۆ']],
   ['زانکۆی گەرمیان', ['گەرمیان', 'گه‌رمیان']],
-  ['زانکۆی ئاکرێ', ['ئاکرێ', 'ئاکرێ', 'ئاکرێ']],
-  ['زانکۆی پۆلیتەکنیکی هەولێر', ['پۆلیتەکنیکی هەولێر', 'پۆ هەولێر', 'پۆلیتەکنیکی هەولێر']],
+  ['زانکۆی ئاکرێ', ['ئاکرێ']],
+  ['زانکۆی پۆلیتەکنیکی هەولێر', ['پۆلیتەکنیکی هەولێر', 'پۆ هەولێر']],
   ['زانکۆی پۆلیتەکنیکی ڕاپەڕین', ['پۆلیتەکنیکی ڕاپەڕین']]
 ];
 
@@ -693,7 +673,7 @@ function findUniSegment(name) {
   const parts = name.split('/');
   for (const p of parts) {
     const n = normArabic(p);
-    if (n.includes('زانکۆ') || n.includes('ز.') || n.includes('ز ')) return p.trim();
+    if (n.includes('زانکۆ') || n.trim().startsWith('ز.') || n.trim().startsWith('ز ')) return p.trim();
   }
   return null;
 }
@@ -715,9 +695,11 @@ function classifyUniversity(name) {
 function detectProvinceFromNameAndUni(name, uni) {
   const n = normArabic(name);
   if (n.includes('دهۆک') || n.includes('سۆران') || n.includes('شەقڵاوە') || n.includes('زاخۆ')) return 'دهۆک';
-  if (n.includes('ئاکرێ') || n.includes('ئاکرێ') || n.includes('ئاکرێ')) return 'دهۆک';
-  if (n.includes('هەولێر') || n.includes('هەولێر') || n.includes('سەڵاحەدین') || n.includes('کەرکوک') || n.includes('کەرکوک') || n.includes('خەبات') || n.includes('قەڵادزێ') || n.includes('هەڵەبجە') || n.includes('سەید سادق')) return 'هەولێر';
-  if (n.includes('سلێمانی') || n.includes('گەرمیان') || n.includes('ڕاپەڕین') || n.includes('راپەرین') || n.includes('دەربەندیخان') || n.includes('چەمچەماڵ') || n.includes('کەلار') || n.includes('کفری')) return 'سلێمانی';
+  if (n.includes('ئاکرێ')) return 'دهۆک';
+  if (n.includes('هەولێر') || n.includes('سەڵاحەدین') || n.includes('کەرکوک') || n.includes('خەبات') || n.includes('قەڵادزێ') || n.includes('هەڵەبجە') || n.includes('سەید سادق')) return 'هەولێر';
+  if (n.includes('سلێمانی') || n.includes('گەرمیان') || n.includes('ڕاپەڕین') || n.includes('دەربەندیخان') || n.includes('چەمچەماڵ') || n.includes('کەلار') || n.includes('کفری')) return 'سلێمانی';
+  if (n.includes('دهۆک')) return 'دهۆک';
+  if (n.includes('هەولێر') || n.includes('سەڵاحەدین')) return 'هەولێر';
 
   if (uni) {
     if (['زانکۆی سەڵاحەدین', 'زانکۆی پۆلیتەکنیکی هەولێر', 'زانکۆی هەولێری پزیشکی', 'زانکۆی ڕاپەڕین', 'زانکۆی هەڵەبجە', 'زانکۆی ئاکرێ'].includes(uni)) return 'هەولێر';
@@ -888,16 +870,16 @@ function trackMatches(rowTrack, studentTrack) {
 }
 
 function isMedicalInstitute(dept) {
-  const n = normArabic(dept.section);
-  const isInstitute = n.includes('پەیمانگا') || n.includes('په‌یمانگا') || n.includes('پەیمانگە');
+  const n = normArabic(dept.name);
+  const isInstitute = n.includes('پەیمانگا') || n.includes('په‌یمانگا');
   const isMedical = n.includes('پەرستاری') || n.includes('پزیشکی') || n.includes('دەرمانسازی') || n.includes('تەندروستی') || n.includes('قابیلە') || n.includes('ژینگە') || n.includes('پزیشکی');
   return isInstitute && isMedical;
 }
 
 function isBranchCompatible(dept, branch) {
   if (!branch) return true;
-  const text = normArabic(dept.section + ' ' + (dept.field || '') + ' ' + (dept.fieldLabel || ''));
-  const sciKeywords = ['زانست', 'پزیشکی', 'ئەندازیاری', 'پەرستاری', 'کۆمپیوتەر', 'تەکنەلۆجیا', 'کیمیا', 'فیزیا', 'بایۆلۆجی', 'بیرکاری', 'ئامار', 'جوگرافیا', 'کشتوکاڵ', 'بەیتەر', 'دەرمانسازی', 'تەندروستی', 'ڤێتێرنەری', 'زەوی', 'ژینگە'];
+  const text = normArabic(dept.name + ' ' + (dept.section || '') + ' ' + (dept.field || ''));
+  const sciKeywords = ['زانست', 'پزیشکی', 'ئەندازیاری', 'پەرستاری', 'کۆمپیوتەر', 'تەکنەلۆجیا', 'کیمیا', 'فیزیا', 'بایۆلۆجی', 'بیرکاری', 'ئامار', 'جوگرافیا', 'کشتوکاڵ', 'بەیتەر', 'دەرمانسازی', 'تەندروستی', 'ڤێتێرنەری', 'زەوی', 'ژینگە', 'بیرکاری', 'ئەندازیاری', 'پزیشکی', 'دەرمانسازی', 'پەرستاری', 'تەندروستی', 'ڤێتێرنەری', 'ژینگە', 'زانست', 'کیمیا', 'فیزیا', 'بایۆلۆجی', 'جوگرافیا', 'کشتوکاڵ'];
   const litKeywords = ['ئاداب', 'زمان', 'مێژوو', 'جوگرافیا', 'فەلسەفە', 'کۆمەڵایەتی', 'دەروونناسی', 'یاسا', 'سیاسەت', 'ئابوری', 'کارگێڕی', 'پەروەردە', 'وەرزش', 'هونەر', 'شانۆ', 'میوزیک', 'راگەیاندن', 'کتابخانە', 'شوێنەوار'];
 
   const hasSci = sciKeywords.some(k => text.includes(normArabic(k)));
@@ -1244,7 +1226,6 @@ function populateFormOptions() {
     });
   });
 
-  // Admin vs Student
   const nameInput = document.getElementById('fName');
   const scoreInput = document.getElementById('fScore');
 
@@ -1365,8 +1346,8 @@ document.getElementById('genBtn').addEventListener('click', () => {
     provs: Array.from(selProvs)
   };
 
-  const { bands, totalCandidates } = runMatching(student, DEPARTMENTS);
-  renderResults(student, bands, totalCandidates);
+  const result = runMatching(student, DEPARTMENTS);
+  renderResults(student, result.bands, result.totalCandidates);
 });
 
 /* ============================================================
@@ -1404,7 +1385,7 @@ function getRowClass(track, session) {
 }
 
 /* ============================================================
-   🗑️ سڕینەوە و زیادکردن — بە EVENT LISTENER (چارەسەری کێشە)
+   🗑️ سڕینەوە و زیادکردن
    ============================================================ */
 function removeDept(band, index) {
   DISPLAYED_BANDS[band].splice(index, 1);
@@ -1434,6 +1415,10 @@ function addMoreDept(band) {
   DISPLAYED_BANDS[band].push(candidates[0]);
   renderResultsUI();
 }
+
+// ⚠️ گرنگ: فەنکشنەکان بکە گلۆباڵ بۆ ئەوەی onclick کار بکات
+window.removeDept = removeDept;
+window.addMoreDept = addMoreDept;
 
 /* ============================================================
    🎨 ڕێندەرکردنی ئەنجامەکان
@@ -1536,6 +1521,7 @@ let dragSrcIndex = null;
 function setupDragAndDrop() {
   const rows = document.querySelectorAll('tr.draggable-row');
   rows.forEach(row => {
+    row.setAttribute('draggable', 'true');
     row.addEventListener('dragstart', handleDragStart);
     row.addEventListener('dragover', handleDragOver);
     row.addEventListener('dragleave', handleDragLeave);
