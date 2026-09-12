@@ -194,9 +194,8 @@
 
   .add-more-btn {
     margin-top: 10px; background: #F4F2EA; border: 1px dashed var(--ink-soft);
-    color: var(--ink); padding: 10px 16px; border-radius: 3px; font-size: 12.5px;
+    color: var(--ink); padding: 9px 16px; border-radius: 3px; font-size: 12.5px;
     font-weight: 700; cursor: pointer; width: 100%; font-family: inherit; transition: .15s;
-    display: block; text-align: center;
   }
   .add-more-btn:hover { background: #EAE6D8; border-color: var(--ink); }
 
@@ -220,81 +219,13 @@
   tbody tr.row-evening:hover { background: #DDD6FE !important; }
   tbody tr.row-evening td { color: #5B21B6; border-color: #C4B5FD !important; }
 
-  tbody tr.row-morning { background: #DCFCE7 !important; }
-  tbody tr.row-morning:hover { background: #BBF7D0 !important; }
-  tbody tr.row-morning td { color: #166534; border-color: #86EFAC !important; }
-
-  tbody tr.row-zankoline td.name, tbody tr.row-parallel td.name,
-  tbody tr.row-evening td.name, tbody tr.row-morning td.name { font-weight: 700; }
-
-  input:disabled, select:disabled { background: #F1F5F9 !important; cursor: not-allowed !important; color: #64748B !important; }
-
   @media (max-width: 1024px) {
     .layout { grid-template-columns: 1fr 320px; gap: 18px; }
-    .wrap { padding: 20px 16px 60px; }
-    .topbar { padding: 14px 18px; }
-    .brand .mark { font-size: 22px; }
-    .brand .tag { font-size: 11.5px; }
-    .card { padding: 18px 18px; }
   }
 
   @media (max-width: 900px) {
     .layout { grid-template-columns: 1fr; gap: 16px; }
     .form-card { position: static; order: -1; }
-    .topbar { flex-wrap: wrap; gap: 10px; padding: 12px 14px; }
-    .topbar-right { width: 100%; justify-content: space-between; }
-    .stepper { font-size: 11.5px; }
-    .logout-btn { padding: 5px 10px; font-size: 11px; }
-  }
-
-  @media (max-width: 640px) {
-    body { font-size: 14px; line-height: 1.55; }
-    .wrap { padding: 14px 10px 50px; }
-    .topbar { padding: 10px 12px; border-bottom-width: 2px; }
-    .brand { flex-direction: column; align-items: flex-start; gap: 2px; }
-    .brand .mark { font-size: 19px; }
-    .brand .tag { font-size: 10.5px; line-height: 1.4; }
-    .logout-btn { padding: 5px 9px; font-size: 10.5px; }
-    .card { padding: 14px 12px; border-radius: 3px; }
-    .upload-card { padding: 26px 18px; }
-    .upload-card h2 { font-size: 17px; }
-    .upload-card p { font-size: 12.5px; }
-    .drop { padding: 22px 12px; }
-    .drop .icon { font-size: 24px; }
-    .drop .main { font-size: 13.5px; }
-    .drop .sub { font-size: 11px; }
-    .proceed-btn { padding: 11px 20px; font-size: 14px; }
-    .form-card h3 { font-size: 15.5px; }
-    .field label { font-size: 12px; }
-    .field input[type=text], .field input[type=number], .field select { padding: 9px 10px; font-size: 14px; }
-    @supports (-webkit-touch-callout: none) {
-      .field input[type=text], .field input[type=number], .field select { font-size: 16px; }
-    }
-    .seg button { padding: 8px 4px; font-size: 12px; }
-    .chip { padding: 6px 10px; font-size: 11.5px; }
-    .generate-btn { padding: 12px; font-size: 14px; }
-    .results-head { flex-direction: column; align-items: stretch; gap: 10px; }
-    .results-head h2 { font-size: 18px; }
-    .results-head .meta { font-size: 11.5px; }
-    .print-btn { width: 100%; padding: 10px; font-size: 13px; }
-    .band-head h3 { font-size: 14px; }
-    .band-head .count { font-size: 11px; }
-    .band-desc { font-size: 11.5px; }
-    .table-scroll { margin: 0 -12px; padding: 0 12px; }
-    table { font-size: 11px; min-width: 720px; }
-    thead th { padding: 7px 3px; font-size: 10px; }
-    tbody td { padding: 7px 3px; font-size: 10.5px; }
-    tbody td.name { font-size: 11px; }
-    .col-num   { width: 30px; }
-    .col-prov  { width: 60px; }
-    .col-score { width: 65px; }
-    .col-diff  { width: 55px; }
-    .col-quota { width: 55px; }
-    .col-track { width: 60px; }
-    .col-session { width: 70px; }
-    .col-action { width: 40px; }
-    .add-more-btn { font-size: 11.5px; padding: 8px 12px; }
-    .footer { font-size: 11px; padding: 18px 12px; }
   }
 
   .report-header{ display:none; }
@@ -302,10 +233,6 @@
   @media print{
     @page { size: A4 portrait; margin: 12mm 10mm 12mm 10mm; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-    tbody tr.row-zankoline, tbody tr.row-zankoline td { background: #DBEAFE !important; color: #1E40AF !important; }
-    tbody tr.row-parallel, tbody tr.row-parallel td { background: #FFEDD5 !important; color: #9A3412 !important; }
-    tbody tr.row-evening, tbody tr.row-evening td { background: #EDE9FE !important; color: #5B21B6 !important; }
-    tbody tr.row-morning, tbody tr.row-morning td { background: #DCFCE7 !important; color: #166534 !important; }
     body{ background:#fff !important; color:#000 !important; direction: rtl !important; font-size: 10px !important; }
     .topbar, .form-card, .print-btn, .empty-state, .upload-shell, .reset-link, .add-more-btn, .fav-badge, .footer { display: none !important; }
     .col-action { display: none !important; width: 0 !important; }
@@ -317,18 +244,10 @@
     .report-header h1{ font-size:17px; margin:0 0 6px; text-align:center; }
     .report-info{ display:flex; flex-wrap:wrap; gap:15px; font-size:11px; justify-content:center; }
     .band{ break-inside:avoid; margin-bottom:20px; }
-    table{ width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5px !important; min-width: 0 !important; }
+    table{ width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5px !important; }
     thead{ display:table-header-group !important; }
     tr{ break-inside:avoid !important; }
     thead th, tbody td { border: 1px solid #888 !important; padding: 5px 3px !important; }
-    .col-num    { width: 4% !important; }
-    .col-dept   { width: 38% !important; }
-    .col-prov   { width: 10% !important; }
-    .col-score  { width: 12% !important; }
-    .col-diff   { width: 10% !important; }
-    .col-quota  { width: 8% !important; }
-    .col-track  { width: 9% !important; }
-    .col-session{ width: 9% !important; }
   }
 </style>
 </head>
@@ -476,7 +395,7 @@
 </footer>
 
 <script>
-// --- GLOBAL VARS & LOGIC ---
+// Global variables
 const ACTIVE_USER = {
   username: localStorage.getItem("userUsername") || '',
   name: localStorage.getItem("userName") || '',
@@ -489,7 +408,7 @@ const DEPARTMENTS_API_URL = "https://api.jsonbin.io/v3/b/6618588f158b383418836ec
 const DEPARTMENTS_API_KEY = 'oh9PTf05_HzIaHpJf9LhxTzjQoUx6LSa';
 
 let DEPARTMENTS = [];
-let ALL_CANDIDATES = []; 
+let ALL_CANDIDATES = [];
 let DISPLAYED_BANDS = { reach: [], match: [], safety: [] };
 let CURRENT_STUDENT = null;
 
@@ -497,9 +416,9 @@ let selFields = new Set(), selUnis = new Set(), selProvs = new Set();
 let trackVal = "زانكۆلاین", sessionVal = "بەیانی", branchVal = "زانستی";
 
 const BAND_CONFIG = {
-  reach:  { label: "بەشەکانی مەترسی (Reach)", desc: "ئەو بەشانەی نمرەی ساڵی ڕابردوویان ٣ تا ٦ نمرە لە نمرەی تۆ بەرزترە", range: [3, 6], class: "reach" },
-  match:  { label: "بەشە گونجاوەکان (Match)", desc: "ئەو بەشانەی نمرەی ساڵی ڕابردوویان ٠ تا ٣ نمرە لە نمرەی تۆ بەرزترە", range: [0, 3], class: "match" },
-  safety: { label: "بەشە دڵنیاکان (Safety)", desc: "ئەو بەشانەی نمرەی ساڵی ڕابردوویان تا ٥ نمرە لە نمرەی تۆ نزمترە", range: [-5, 0], class: "safety" }
+  reach:  { label: "بەشەکانی مەترسی (Reach)", desc: "ئەو بەشانەی نمرەیان لە نمرەی تۆ بەرزترە", class: "reach" },
+  match:  { label: "بەشە گونجاوەکان (Match)", desc: "ئەو بەشانەی نمرەیان زۆر نزیکە لە نمرەی تۆوە", class: "match" },
+  safety: { label: "بەشە دڵنیاکان (Safety)", desc: "ئەو بەشانەی نمرەیان لە نمرەی تۆ نزمترە", class: "safety" }
 };
 
 function normArabic(str) {
@@ -656,9 +575,9 @@ function buildDepartmentsFromWorkbook(wb) {
 function trackMatches(rowTrack, reqTrack) {
   if (!reqTrack) return true;
   const rNorm = normArabic(rowTrack), qNorm = normArabic(reqTrack);
-  if (qNorm.includes('زانكۆلاین')) return rNorm.includes('زانكۆلاین') || rNorm.includes('گشتی') || !rNorm;
+  if (qNorm.includes('زانكۆلاین')) return rNorm.includes('زانكۆلاین') || rNorm.includes('گشتی');
   if (qNorm.includes('پارالێڵ')) return rNorm.includes('پارالێڵ');
-  return true;
+  return rNorm === qNorm;
 }
 
 function isBranchCompatible(dept, branch) {
@@ -680,15 +599,10 @@ function pickScores(dept, student) {
   const reqSession = student.session, reqTrack = student.track, userProv = student.province || '';
 
   let filtered = dept.rows.filter(r => {
-    if (reqSession && r.session && r.session !== reqSession) return false;
+    if (reqSession && r.session !== reqSession) return false;
     if (!trackMatches(r.track, reqTrack)) return false;
     return true;
   });
-
-  // ئەگەر بەهۆی فلتەرەکە هیچ نەدۆزرایەوە، فلتەری خوێندن لابدە
-  if (filtered.length === 0) {
-    filtered = dept.rows.filter(r => trackMatches(r.track, reqTrack));
-  }
 
   if (filtered.length === 0) return [];
 
@@ -719,7 +633,6 @@ function getScoredDepartmentObjects(dept, student) {
     const diff = Math.round((r.score - student.score) * 100) / 100;
     const prefScore = calculatePreferenceScore(dept, student);
     return {
-      id: dept.name + '_' + (r.session||'') + '_' + (r.track||''),
       name: dept.name,
       university: dept.university,
       province: dept.province,
@@ -735,12 +648,6 @@ function getScoredDepartmentObjects(dept, student) {
   });
 }
 
-function multiCriteriaSorter(a, b) {
-  if (b.prefScore !== a.prefScore) return b.prefScore - a.prefScore;
-  return b.lastYearScore - a.lastYearScore;
-}
-
-// 🎯 پرۆسەی سەرەکی دروستکردن و دابەشکردنی بەشەکان
 function runMatching(student, depts) {
   CURRENT_STUDENT = student;
   let candidates = [];
@@ -748,66 +655,59 @@ function runMatching(student, depts) {
     const scoredArr = getScoredDepartmentObjects(d, student);
     candidates = candidates.concat(scoredArr);
   }
+  
+  // پاککردنەوە و ڕێکخستنی هەموو بەشە بەردەستەکان بر پێی جیاوازی نمرە
   ALL_CANDIDATES = candidates;
 
-  const bands = { reach: [], match: [], safety: [] };
-  const usedIds = new Set();
+  const reachPool = ALL_CANDIDATES.filter(c => c.diff > 2.5).sort((a,b) => Math.abs(a.diff) - Math.abs(b.diff));
+  const matchPool = ALL_CANDIDATES.filter(c => c.diff >= -2.5 && c.diff <= 2.5).sort((a,b) => Math.abs(a.diff) - Math.abs(b.diff));
+  const safetyPool = ALL_CANDIDATES.filter(c => c.diff < -2.5).sort((a,b) => Math.abs(a.diff) - Math.abs(b.diff));
 
-  for (const bKey of ['reach', 'match', 'safety']) {
-    const [minD, maxD] = BAND_CONFIG[bKey].range;
-    let pool = ALL_CANDIDATES.filter(c => {
-      return c.diff >= minD && c.diff <= maxD && !usedIds.has(c.id);
-    });
-    pool.sort(multiCriteriaSorter);
+  DISPLAYED_BANDS = {
+    reach: reachPool.slice(0, 5),
+    match: matchPool.slice(0, 5),
+    safety: safetyPool.slice(0, 5)
+  };
 
-    const initialPick = pool.slice(0, 5); 
-    initialPick.forEach(c => usedIds.add(c.id));
-    bands[bKey] = initialPick;
-  }
-
-  DISPLAYED_BANDS = bands;
-  return { bands, totalCandidates: candidates.length };
+  return { bands: DISPLAYED_BANDS, totalCandidates: candidates.length };
 }
 
-// ➕ بەتنی زیادکردن لە هەر بەشێکدا
-window.loadMoreForBand = function(bandKey) {
-  const [minD, maxD] = BAND_CONFIG[bandKey].range;
-  const currentShownIds = new Set();
+// ➕ ئەگەر بەتنی زیادکردن لە هەر بەشێکدا داگیرا
+function loadMoreForBand(bandKey) {
+  const currentShownKeys = new Set();
 
-  // هەموو دیارکراوەکانی لەسەر پەڕەکەن دەستنیشان بکە
+  // هەموو ئەو بەشانەی پێشتر لە هەر سێ بەشەکەدا دیارن کۆمێنت دەکات
   ['reach', 'match', 'safety'].forEach(k => {
-    (DISPLAYED_BANDS[k] || []).forEach(c => {
-      currentShownIds.add(c.id);
+    DISPLAYED_BANDS[k].forEach(c => {
+      currentShownKeys.add(c.name + '|' + (c.session||'') + '|' + (c.track||''));
     });
   });
 
-  // گەڕان لەناو تەواوی بەشە بەردەستەکان بۆ وەرگرتنی زیاتر
+  // فلتەرکردنی بەشی زیاتر بۆ سەرجام بەشە نەبینراوەکان
   let pool = ALL_CANDIDATES.filter(c => {
-    return c.diff >= minD && c.diff <= maxD && !currentShownIds.has(c.id);
+    const key = c.name + '|' + (c.session||'') + '|' + (c.track||'');
+    if (currentShownKeys.has(key)) return false;
+
+    if (bandKey === 'reach') return c.diff > 0;
+    if (bandKey === 'match') return c.diff >= -5 && c.diff <= 5;
+    if (bandKey === 'safety') return c.diff < 0;
+    return true;
   });
 
-  // ئەگەر لەم مەودایە نەبوو، تا کەمێک فراوانتر بگەڕێ
-  if (pool.length === 0) {
-    pool = ALL_CANDIDATES.filter(c => !currentShownIds.has(c.id));
-  }
-
-  pool.sort(multiCriteriaSorter);
+  // ڕێکخستنی لیستەکە بەپێی نزیکترین بەش بۆ نمرەکە
+  pool.sort((a, b) => Math.abs(a.diff) - Math.abs(b.diff));
 
   if (pool.length === 0) {
-    alert("هیچ بەشێکی تری نوێ لە داتابەیسەکەدا نادۆزرایەوە!");
+    alert("هیچ بەشێکی تری شایستە نەدۆزرایەوە!");
     return;
   }
 
+  // ٥ بەشی تر زیاد دەکات
   const nextChunk = pool.slice(0, 5);
   DISPLAYED_BANDS[bandKey] = DISPLAYED_BANDS[bandKey].concat(nextChunk);
 
   renderResultsUI();
-};
-
-window.removeRow = function(bKey, index) {
-  DISPLAYED_BANDS[bKey].splice(index, 1);
-  renderResultsUI();
-};
+}
 
 // UI RENDERING
 function renderResultsUI() {
@@ -817,7 +717,7 @@ function renderResultsUI() {
   let totalCount = 0;
 
   for (const bKey of ['reach', 'match', 'safety']) {
-    const bandList = DISPLAYED_BANDS[bKey] || [];
+    const bandList = DISPLAYED_BANDS[bKey];
     totalCount += bandList.length;
 
     const conf = BAND_CONFIG[bKey];
@@ -846,7 +746,7 @@ function renderResultsUI() {
           <td>${item.quota || 'گشتی'}</td>
           <td>${item.track || 'زانکۆلاین'}</td>
           <td>${item.session || 'بەیانی'}</td>
-          <td><button type="button" class="action-btn delete" onclick="removeRow('${bKey}', ${index})">✕</button></td>
+          <td><button class="action-btn delete" onclick="removeRow('${bKey}', ${index})">✕</button></td>
         </tr>
       `;
     });
@@ -878,7 +778,7 @@ function renderResultsUI() {
           </tbody>
         </table>
       </div>
-      <button type="button" class="add-more-btn" onclick="loadMoreForBand('${bKey}')">➕ زیادکردنی بەشی زیاتر بۆ ${conf.label}</button>
+      <button class="add-more-btn" onclick="loadMoreForBand('${bKey}')">➕ زیادکردنی ٥ بەشی تر بۆ ${conf.label}</button>
     `;
 
     resultsBody.appendChild(bandEl);
@@ -886,6 +786,11 @@ function renderResultsUI() {
 
   document.getElementById("resultsMeta").textContent = `کۆی گشتی پێشنیارە ڕیزکراوەکان: ${totalCount} بەش`;
   document.getElementById("printBtn").style.display = totalCount > 0 ? "block" : "none";
+}
+
+function removeRow(bKey, index) {
+  DISPLAYED_BANDS[bKey].splice(index, 1);
+  renderResultsUI();
 }
 
 // EVENTS & INIT
