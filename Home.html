@@ -1519,13 +1519,12 @@ function removeDept(band, idx) {
    ✅ چاککراو: زیادکردنی بەشی تر بۆ هەر باندێک
    ============================================================ */
 function addMoreDept(band) {
-  // پشکنین: دڵنیابوون لەوەی خوێندکار هەڵبژێردراوە
   if (!CURRENT_STUDENT) {
     alert('تکایە سەرەتا پێشنیارەکان دروست بکە.');
     return;
   }
 
-  // کۆکردنەوەی ناوەکانی ئەو بەشانەی کە پێشتر زیادکراون
+  // 1. کۆکردنەوەی هەموو ئەو بەشانەی کە پێشتر نمایشکراون (بە name + session + track)
   const existingKeys = new Set();
   Object.values(DISPLAYED_BANDS).forEach(arr => {
     arr.forEach(d => {
@@ -1534,42 +1533,102 @@ function addMoreDept(band) {
     });
   });
 
-  // گەڕان بۆ کاندیدە نوێیەکان
+  // 2. گەڕان بەسەر هەموو بەشەکانی داتابەیس
   let candidates = [];
-  for (const dept of DEPARTMENTS) {
-    // ✅ چاککردن: ناوی دروستی فەنکشن + وەرگرتنی ئارەیەک
-    const scoredArr = getScoredDepartmentObjects(dept, CURRENT_STUDENT);
-    if (!scoredArr || scoredArr.length === 0) continue;
 
-    for (const scored of scoredArr) {
-      const key = scored.name + '|' + (scored.session || '') + '|' + (scored.track || '');
+  for (const dept of DEPARTMENTS) {
+    // پشکنینی گونجاوی لق
+    if (!isBranchCompatible(dept, CURRENT_STUDENT.branch)) continue;
+
+    // وەرگرتنی هەموو ڕیزەکانی نمرە بۆ ئەم بەشە
+    const allScores = getAllScoredRowsForDept(dept, CURRENT_STUDENT);
+
+    for (const sc of allScores) {
+      const key = sc.name + '|' + (sc.session || '') + '|' + (sc.track || '');
+
+      // ئەگەر پێشتر نمایشکراوە، پەڕی بکە
       if (existingKeys.has(key)) continue;
 
-      if (band === 'reach' && scored.diff > 0) {
-        candidates.push(scored);
-      } else if (band === 'match' && scored.diff <= 3 && scored.diff >= -3) {
-        candidates.push(scored);
-      } else if (band === 'safety' && scored.diff < 0) {
-        candidates.push(scored);
+      // پشکنینی گونجاوی بۆ باندەکە
+      if (band === 'reach' && sc.diff > 0) {
+        candidates.push(sc);
+      } else if (band === 'match' && sc.diff <= 3 && sc.diff >= -3) {
+        candidates.push(sc);
+      } else if (band === 'safety' && sc.diff < 0) {
+        candidates.push(sc);
       }
     }
   }
 
-  // ئەگەر هیچ کاندیدێک نەبوو
   if (candidates.length === 0) {
     alert('هیچ بەشێکی تر نەدۆزرایەوە بۆ زیادکردن لەم دەستەیە.');
     return;
   }
 
-  // ڕیزکردن و هەڵبژاردنی باشترین
+  // 3. ڕیزکردن و هەڵبژاردنی باشترین
   candidates.sort(multiCriteriaSorter);
   const best = candidates[0];
 
-  // زیادکردن بۆ باندەکە
+  // 4. زیادکردن بۆ باندەکە
   DISPLAYED_BANDS[band].push(best);
 
-  // نوێکردنەوەی ڕووکار
+  // 5. نوێکردنەوەی ڕووکار
   renderResultsUI();
+}
+function getAllScoredRowsForDept(dept, student) {
+  const sessionWant = student.session;
+  const trackWant = student.track;
+  const homeProv = student.province || '';
+  const isMedInst = isMedicalInstitute(dept);
+
+  // فلتەرکردنی ڕیزەکان بەپێی مەرجەکان
+  let rows = dept.rows.filter(r => {
+    if (sessionWant && r.session !== sessionWant) return false;
+    if (!trackMatches(r.track, trackWant)) return false;
+
+    const rIsZankoline = normArabic(r.track).includes('زانکۆلاین');
+    const rIsMorning = r.session === 'بەیانی';
+
+    if (isMedInst && rIsZankoline && rIsMorning) {
+      if (homeProv && dept.province && homeProv !== dept.province) return false;
+    }
+    return true;
+  });
+
+  if (rows.length === 0) return [];
+
+  // ڕیزکردن بەپێی گونجاوی پارێزگا
+  const isLocal = homeProv && dept.province && homeProv === dept.province;
+  rows = rows.slice().sort((a, b) => {
+    function rank(r) {
+      const q = r.quota || '';
+      if (isLocal) {
+        return q === 'پارێزگا' ? 0 : (q === 'گشتی' ? 1 : 2);
+      }
+      return q === 'گشتی' ? 0 : (q === 'پارێزگا' ? 1 : 2);
+    }
+    return rank(a) - rank(b);
+  });
+
+  // دروستکردنی ئۆبجێکت بۆ هەر ڕیزێک
+  return rows.map(r => {
+    const diff = Math.round((r.score - student.score) * 100) / 100;
+    const prefScore = calculatePreferenceScore(dept, student);
+
+    return {
+      name: dept.name,
+      university: dept.university,
+      province: dept.province,
+      fieldLabel: dept.fieldLabel,
+      lastYearScore: r.score,
+      diff: diff,
+      quota: r.quota,
+      track: r.track,
+      session: r.session,
+      isFav: prefScore > 0,
+      prefScore: prefScore
+    };
+  });
 }
 
 /* ---------- Drag & Drop ---------- */
