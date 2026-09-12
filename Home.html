@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400..700&family=Noto+Sans+Arabic:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
+  // پشکنین: ئەگەر بەکارهێنەر لۆگئینی نەکردبێت، ڕاستەوخۆ دەینێرێتەوە بۆ پەیجی index.html
   if (localStorage.getItem("userLoggedIn") !== "true") {
     window.location.href = "index.html";
   }
@@ -187,6 +188,7 @@
   .band.safety{ color:var(--safety); }
   .band-desc{ font-size:12px; color:var(--ink-soft); margin:-4px 0 12px; }
 
+  /* ڕێکخستنی بنەڕەتی خشتە */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -268,6 +270,7 @@
     background:transparent;
   }
 
+  /* ڕەنگی ڕیزەکان */
   tbody tr.row-zankoline { background: #DBEAFE !important; }
   tbody tr.row-zankoline:hover { background: #BFDBFE !important; }
   tbody tr.row-zankoline td { color: #1E40AF; border-color: #93C5FD !important; }
@@ -304,38 +307,173 @@
   }
 
   .report-header{ display:none; }
-  
+
+  /* ============================================================
+     📱 ڕیسپۆنسیڤ بۆ مۆبایل و تابلێت
+     ============================================================ */
+
+  /* تابلێت */
+  @media (max-width: 960px) {
+    .layout {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .form-card {
+      position: static;
+      order: -1;
+    }
+    .wrap {
+      padding: 18px 14px 60px;
+    }
+    .topbar {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .brand .mark { font-size: 20px; }
+    .brand .tag { font-size: 11px; display: none; }
+    .topbar-right { gap: 8px; }
+    .stepper { font-size: 11px; }
+    .logout-btn { padding: 5px 10px; font-size: 11px; }
+    .results-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .print-btn { width: 100%; text-align: center; }
+
+    /* خشتە بۆ تابلێت — سکرۆڵی ئاسۆیی */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -14px;
+      padding: 0 14px;
+    }
+  }
+
+  /* مۆبایل */
+  @media (max-width: 600px) {
+    .upload-shell { margin: 20px auto; }
+    .upload-card { padding: 24px 18px; }
+    .upload-card h2 { font-size: 18px; }
+    .upload-card p { font-size: 13px; }
+    .drop { padding: 22px 12px; }
+    .drop .icon { font-size: 24px; }
+    .drop .main { font-size: 13px; }
+    .stats-row { gap: 6px; }
+    .stat-chip { padding: 6px 10px; font-size: 11px; }
+    .stat-chip b { font-size: 14px; }
+    .proceed-btn { padding: 10px 20px; font-size: 13.5px; }
+    .card { padding: 16px 14px; }
+    .form-card h3 { font-size: 15px; }
+    .field label { font-size: 11.5px; }
+    .field input[type=text],
+    .field input[type=number],
+    .field select { padding: 8px 9px; font-size: 12.5px; }
+    .seg button { font-size: 11px; padding: 7px 3px; }
+    .chip { font-size: 11px; padding: 5px 9px; }
+    .generate-btn { font-size: 13px; padding: 11px; }
+    .results-head h2 { font-size: 17px; }
+    .results-head .meta { font-size: 11.5px; }
+
+    /* خشتە بۆ مۆبایل — سکرۆڵی ئاسۆیی */
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 -14px;
+      padding: 0 14px;
+    }
+    table {
+      font-size: 10px;
+      min-width: 720px;
+      table-layout: auto;
+    }
+    thead th { font-size: 9.5px; padding: 6px 4px; }
+    tbody td { padding: 6px 4px; font-size: 10px; }
+    tbody td.name { font-size: 10.5px; }
+
+    .col-drag   { width: 26px; }
+    .col-num    { width: 30px; }
+    .col-prov   { width: 65px; }
+    .col-score  { width: 70px; }
+    .col-diff   { width: 60px; }
+    .col-quota  { width: 60px; }
+    .col-track  { width: 60px; }
+    .col-session{ width: 75px; }
+    .col-action { width: 45px; }
+
+    .band-head h3 { font-size: 14px; }
+    .band-head .count { font-size: 11px; padding: 2px 7px; }
+    .band-desc { font-size: 11px; }
+    .add-more-btn { font-size: 11px; padding: 7px 12px; }
+    .report-header h1 { font-size: 15px; }
+    .report-info { font-size: 10px; gap: 8px; }
+  }
+
+  /* مۆبایلی بچووک */
+  @media (max-width: 400px) {
+    .topbar { padding: 10px 12px; }
+    .brand .mark { font-size: 17px; }
+    .stepper { font-size: 10px; }
+    .logout-btn { padding: 4px 8px; font-size: 10px; }
+    table { font-size: 9px; min-width: 680px; }
+    thead th { font-size: 8.5px; padding: 5px 3px; }
+    tbody td { padding: 5px 3px; font-size: 9px; }
+    tbody td.name { font-size: 9.5px; }
+  }
+
+  /* PRINT */
   @media print{
-    @page { size: A4 portrait; margin: 12mm 10mm 12mm 10mm; }
+    @page { size: A4 portrait; margin: 12mm 10mm; }
     * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
-    tbody tr.row-zankoline, tbody tr.row-zankoline td { background: #DBEAFE !important; color: #1E40AF !important; }
-    tbody tr.row-parallel, tbody tr.row-parallel td { background: #FFEDD5 !important; color: #9A3412 !important; }
-    tbody tr.row-evening, tbody tr.row-evening td { background: #EDE9FE !important; color: #5B21B6 !important; }
-    tbody tr.row-morning, tbody tr.row-morning td { background: #DCFCE7 !important; color: #166534 !important; }
+    tbody tr.row-zankoline,
+    tbody tr.row-zankoline td { background: #DBEAFE !important; color: #1E40AF !important; }
+    tbody tr.row-parallel,
+    tbody tr.row-parallel td { background: #FFEDD5 !important; color: #9A3412 !important; }
+    tbody tr.row-evening,
+    tbody tr.row-evening td { background: #EDE9FE !important; color: #5B21B6 !important; }
+    tbody tr.row-morning,
+    tbody tr.row-morning td { background: #DCFCE7 !important; color: #166534 !important; }
 
     body{ background:#fff !important; color:#000 !important; direction: rtl !important; font-size: 10px !important; }
-    .topbar, .form-card, .print-btn, .empty-state, .upload-shell, .reset-link, .add-more-btn, .fav-badge, .footer { display: none !important; }
-    
+    .topbar, .form-card, .print-btn, .empty-state, .upload-shell, .reset-link, .add-more-btn, .fav-badge, .footer {
+      display: none !important;
+    }
     .col-drag, .col-action, .drag-handle { display: none !important; width: 0 !important; }
-
     .wrap{ padding:0 !important; max-width:100% !important; margin: 0 !important; }
     .layout{ display:block !important; }
     .card.results-card{ border:none !important; padding:0 !important; }
-    
-    .report-header{ display:block !important; margin-bottom:15px; border-bottom:2px solid #142235; padding-bottom:8px; }
+    .table-wrap { overflow: visible !important; margin: 0 !important; padding: 0 !important; }
+
+    .report-header{
+      display:block !important; margin-bottom:15px; border-bottom:2px solid #142235; padding-bottom:8px;
+    }
     .report-header h1{ font-size:17px; margin:0 0 6px; text-align:center; }
     .report-info{ display:flex; flex-wrap:wrap; gap:15px; font-size:11px; justify-content:center; }
-    
+
     .band{ break-inside:avoid; margin-bottom:20px; }
-    
-    table{ width: 100% !important; table-layout: fixed !important; border-collapse: collapse !important; font-size: 9.5px !important; }
+
+    table{
+      width: 100% !important;
+      table-layout: fixed !important;
+      border-collapse: collapse !important;
+      font-size: 9.5px !important;
+      min-width: 0 !important;
+    }
     thead{ display:table-header-group !important; }
     tr{ break-inside:avoid !important; }
-    
-    thead th, tbody td { border: 1px solid #888 !important; padding: 5px 3px !important; }
 
-    td.session-cell { background: transparent !important; color: #000 !important; border: none !important; }
+    thead th, tbody td {
+      border: 1px solid #888 !important;
+      padding: 5px 3px !important;
+    }
+
+    td.session-cell {
+      background: transparent !important;
+      color: #000 !important;
+      border: none !important;
+    }
 
     .col-num    { width: 4% !important; }
     .col-dept   { width: 38% !important; }
@@ -345,259 +483,6 @@
     .col-quota  { width: 8% !important; }
     .col-track  { width: 9% !important; }
     .col-session{ width: 9% !important; }
-  }
-
-  /* ============================================================
-     📱 ڕیسپۆنسیڤ بۆ مۆبایل و تابلێت
-     ============================================================ */
-
-  @media (max-width: 960px) {
-    .layout {
-      grid-template-columns: 1fr;
-      gap: 18px;
-    }
-
-    .form-card {
-      position: static;
-      order: -1;
-    }
-
-    .wrap {
-      padding: 18px 14px 60px;
-    }
-
-    .topbar {
-      padding: 12px 16px;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .brand .mark {
-      font-size: 20px;
-    }
-
-    .brand .tag {
-      font-size: 11px;
-      display: none;
-    }
-
-    .topbar-right {
-      gap: 8px;
-    }
-
-    .stepper {
-      font-size: 11px;
-    }
-
-    .logout-btn {
-      padding: 5px 10px;
-      font-size: 11px;
-    }
-
-    .results-head {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-    }
-
-    .print-btn {
-      width: 100%;
-      text-align: center;
-    }
-
-    #resultsBody {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .upload-card {
-      padding: 24px 18px;
-    }
-
-    .upload-card h2 {
-      font-size: 18px;
-    }
-
-    .upload-card p {
-      font-size: 13px;
-    }
-
-    .drop {
-      padding: 22px 12px;
-    }
-
-    .drop .icon {
-      font-size: 24px;
-    }
-
-    .drop .main {
-      font-size: 13px;
-    }
-
-    .stats-row {
-      gap: 6px;
-    }
-
-    .stat-chip {
-      padding: 6px 10px;
-      font-size: 11px;
-    }
-
-    .stat-chip b {
-      font-size: 14px;
-    }
-
-    .proceed-btn {
-      padding: 10px 20px;
-      font-size: 13.5px;
-    }
-
-    .card {
-      padding: 16px 14px;
-    }
-
-    .form-card h3 {
-      font-size: 15px;
-    }
-
-    .field label {
-      font-size: 11.5px;
-    }
-
-    .field input[type=text],
-    .field input[type=number],
-    .field select {
-      padding: 8px 9px;
-      font-size: 12.5px;
-    }
-
-    .seg button {
-      font-size: 11px;
-      padding: 7px 3px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 5px 9px;
-    }
-
-    .generate-btn {
-      font-size: 13px;
-      padding: 11px;
-    }
-
-    .results-head h2 {
-      font-size: 17px;
-    }
-
-    .results-head .meta {
-      font-size: 11.5px;
-    }
-
-    table {
-      font-size: 10px;
-      table-layout: auto;
-    }
-
-    thead th {
-      font-size: 9.5px;
-      padding: 6px 3px;
-    }
-
-    tbody td {
-      padding: 6px 3px;
-      font-size: 10px;
-    }
-
-    tbody td.name {
-      font-size: 10.5px;
-    }
-
-    .col-drag   { width: 22px; }
-    .col-num    { width: 26px; }
-    .col-prov   { width: 55px; }
-    .col-score  { width: 60px; }
-    .col-diff   { width: 55px; }
-    .col-quota  { width: 55px; }
-    .col-track  { width: 55px; }
-    .col-session{ width: 65px; }
-    .col-action { width: 40px; }
-
-    .band-head h3 {
-      font-size: 14px;
-    }
-
-    .band-head .count {
-      font-size: 11px;
-      padding: 2px 7px;
-    }
-
-    .band-desc {
-      font-size: 11px;
-    }
-
-    .add-more-btn {
-      font-size: 11px;
-      padding: 7px 12px;
-    }
-
-    .report-header h1 {
-      font-size: 15px;
-    }
-
-    .report-info {
-      font-size: 10px;
-      gap: 8px;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .topbar {
-      padding: 10px 12px;
-    }
-
-    .brand .mark {
-      font-size: 17px;
-    }
-
-    .stepper {
-      font-size: 10px;
-    }
-
-    .logout-btn {
-      padding: 4px 8px;
-      font-size: 10px;
-    }
-
-    table {
-      font-size: 9px;
-    }
-
-    thead th {
-      font-size: 8.5px;
-      padding: 5px 2px;
-    }
-
-    tbody td {
-      padding: 5px 2px;
-      font-size: 9px;
-    }
-
-    tbody td.name {
-      font-size: 9.5px;
-    }
-
-    .col-drag   { width: 18px; }
-    .col-num    { width: 22px; }
-    .col-prov   { width: 45px; }
-    .col-score  { width: 50px; }
-    .col-diff   { width: 45px; }
-    .col-quota  { width: 45px; }
-    .col-track  { width: 45px; }
-    .col-session{ width: 55px; }
-    .col-action { width: 35px; }
   }
 </style>
 </head>
@@ -747,7 +632,7 @@
 
 <script>
 /* ============================================================
-   ⚙️ گۆڕاوە گشتییەکان
+   ⚙️ ڕێکخستنەکان و گۆڕاوەکان
    ============================================================ */
 const ACTIVE_USER = {
   username: localStorage.getItem('activeUser') || '',
@@ -758,15 +643,15 @@ const ACTIVE_USER = {
 };
 const IS_ADMIN = ACTIVE_USER.role === 'admin';
 
-const DEPARTMENTS_API_URL = 'https://script.google.com/macros/s/AKfycby8n7BNVatXcCQ3-JHza5hQAA67HPqeoZyGMOH_pJ3DqtY4p4v_tLHwVKexazyPLbm4/exec';
+const DEPARTMENTS_API_URL = 'https://script.google.com/macros/s/AKfycbx5ExVf__KUJ8xrM_MUwUxU7lHT4bMhRnkjX-Q4tXfNTF7KKFwLM9y3LqNJdxrj0RG-/exec';
 const DEPARTMENTS_API_KEY = 'oh9PTf05_HzIaHpJf9LhxTzjQoUx6LSa';
 
 /* ============================================================
    🔤 فەنکشنەکانی یارمەتیدەر
    ============================================================ */
-function normArabic(s) {
-  if (!s) return '';
-  return String(s)
+function normArabic(str) {
+  if (!str) return '';
+  return String(str)
     .replace(/\u200c|\u200f/g, '')
     .trim()
     .replace(/ك/g, 'ک')
@@ -776,50 +661,75 @@ function normArabic(s) {
     .replace(/ە/g, 'ه')
     .replace(/ۆ/g, 'و')
     .replace(/ڕ/g, 'ر')
-    .replace(/ددین/g, 'دین')
     .toLowerCase();
 }
 
-function stripZwnj(s) {
-  return s ? String(s).replace(/\u200c|\u200f/g, '').trim() : '';
+function stripZwnj(str) {
+  if (!str) return '';
+  return String(str).replace(/\u200c|\u200f/g, '').trim();
 }
 
 /* ============================================================
    🏛️ نەخشەی زانکۆکان
    ============================================================ */
 const UNI_MAP = [
-  ['زانکۆی هەولێر', ['هەولێر', 'ههولێر', 'هەولێری']],
-  ['زانکۆی سلێمانی', ['زانکۆی سلێمانی', 'ز. سلێمانی', 'ز.سلێمانی', 'سلێمانی']],
-  ['زانکۆی پۆلیتەکنیکی سلێمانی', ['پۆلیتەکنیکی سلێمانی', 'پۆ.سلێمانی', 'پۆلیتەکنیکی سلێمانی', 'پۆ. سلێمانی']],
+  ['زانکۆی سەڵاحەدین', ['سەڵاحەدین', 'سه‌لاحه‌دین', 'صلاح الدین']],
+  ['زانکۆی سلێمانی', ['زانکۆی سلێمانی', 'سلێمانی', 'ز. سلێمانی', 'ز سلێمانی']],
+  ['زانکۆی پۆلیتەکنیکی سلێمانی', ['پۆلیتەکنیکی سلێمانی', 'پۆ.سلێمانی', 'پۆ سلێمانی']],
   ['زانکۆی دهۆک', ['دهۆک', 'دهوك']],
   ['زانکۆی پۆلیتەکنیکی دهۆک', ['پۆلیتەکنیکی دهۆک', 'پۆلیتەکنیکی دهۆک']],
   ['زانکۆی سۆران', ['سۆران']],
-  ['زانکۆی کۆیە', ['کۆیە', 'کۆیه']],
-  ['زانکۆی هەولێری پزیشکی', ['ههولێری پزیشکی', 'هەولێری پزیشکی', 'پزیشکی هەولێر']],
-  ['زانکۆی هەڵەبجە', ['ههڵهبجه', 'هەڵەبجە']],
+  ['زانکۆی ڕاپەڕین', ['ڕاپەڕین', 'راپەرین']],
+  ['زانکۆی هەولێری پزیشکی', ['هەولێری پزیشکی', 'هه‌ولێری پزیشکی', 'هەولێر پزیشکی']],
+  ['زانکۆی هەڵەبجە', ['هەڵەبجە', 'هه‌ڵه‌بجه']],
   ['زانکۆی زاخۆ', ['زاخۆ']],
-  ['زانکۆی گەرمیان', ['گەرمیان', 'گەرمیان']],
-  ['زانکۆی ڕاپەڕین', ['ڕاپەرین', 'ڕاپەڕین', 'راپەرین', 'ڕاپەڕین']],
-  ['زانکۆی پۆلیتەکنیکی هەولێر', ['پۆلیتەکنیکی هەولێر', 'پۆلیتەکنیکی هەولێر', 'پۆ. هەولێر', 'پۆ.هەولێر', 'پۆلیتەکنیکی هەولێر']],
-  ['زانکۆی ئاکرێ', ['ئاکرێ']]
+  ['زانکۆی گەرمیان', ['گەرمیان', 'گه‌رمیان']],
+  ['زانکۆی ئاکرێ', ['ئاکرێ', 'ئاکرێ', 'ئاکرێ']],
+  ['زانکۆی پۆلیتەکنیکی هەولێر', ['پۆلیتەکنیکی هەولێر', 'پۆ هەولێر', 'پۆلیتەکنیکی هەولێر']],
+  ['زانکۆی پۆلیتەکنیکی ڕاپەڕین', ['پۆلیتەکنیکی ڕاپەڕین']]
 ];
 
-function detectProvinceFromNameAndUni(fullName, uni) {
-  const n = normArabic(fullName);
-  if (n.includes('سۆران') || n.includes('شەقڵاوە') || n.includes('کۆیە')) return 'هەولێر';
-  if (n.includes('ئاکرێ') || n.includes('دهۆک') || n.includes('زاخۆ') || n.includes('سمێل')) return 'دهۆک';
-  if (n.includes('هەڵەبجە') || n.includes('گەرمیان') || n.includes('ڕاپەڕین') || n.includes('کەلار') || n.includes('قەڵادزێ') || n.includes('پێنجوێن')) return 'سلێمانی';
-  if (n.includes('سلێمانی') || n.includes('گەرمیان') || n.includes('ڕاپەرین') || n.includes('ڕاپەڕین')) return 'سلێمانی';
-  if (n.includes('دهۆک')) return 'دهۆک';
-  if (n.includes('هەولێر') || n.includes('سەڵاحەدین')) return 'هەولێر';
+function findUniSegment(name) {
+  const parts = name.split('/');
+  for (const p of parts) {
+    const n = normArabic(p);
+    if (n.includes('زانکۆ') || n.includes('ز.') || n.includes('ز ')) return p.trim();
+  }
+  return null;
+}
+
+function classifyUniversity(name) {
+  const seg = findUniSegment(name);
+  const target = normArabic(seg || name);
+  for (const [canonical, aliases] of UNI_MAP) {
+    for (const alias of aliases) {
+      if (target.includes(normArabic(alias))) return canonical;
+    }
+  }
+  return seg ? seg.trim() : null;
+}
+
+/* ============================================================
+   📍 دیاریکردنی پارێزگا
+   ============================================================ */
+function detectProvinceFromNameAndUni(name, uni) {
+  const n = normArabic(name);
+  if (n.includes('دهۆک') || n.includes('سۆران') || n.includes('شەقڵاوە') || n.includes('زاخۆ')) return 'دهۆک';
+  if (n.includes('ئاکرێ') || n.includes('ئاکرێ') || n.includes('ئاکرێ')) return 'دهۆک';
+  if (n.includes('هەولێر') || n.includes('هەولێر') || n.includes('سەڵاحەدین') || n.includes('کەرکوک') || n.includes('کەرکوک') || n.includes('خەبات') || n.includes('قەڵادزێ') || n.includes('هەڵەبجە') || n.includes('سەید سادق')) return 'هەولێر';
+  if (n.includes('سلێمانی') || n.includes('گەرمیان') || n.includes('ڕاپەڕین') || n.includes('راپەرین') || n.includes('دەربەندیخان') || n.includes('چەمچەماڵ') || n.includes('کەلار') || n.includes('کفری')) return 'سلێمانی';
+
   if (uni) {
-    if (['زانکۆی سەڵاحەدین', 'زانکۆی هەولێر', 'زانکۆی هەولێری پزیشکی', 'زانکۆی پۆلیتەکنیکی هەولێر', 'زانکۆی کۆیە'].includes(uni)) return 'هەولێر';
-    if (['زانکۆی سلێمانی', 'زانکۆی پۆلیتەکنیکی سلێمانی', 'زانکۆی هەڵەبجە', 'زانکۆی گەرمیان', 'زانکۆی ڕاپەڕین'].includes(uni)) return 'سلێمانی';
-    if (['زانکۆی دهۆک', 'زانکۆی پۆلیتەکنیکی دهۆک', 'زانکۆی زاخۆ', 'زانکۆی ئاکرێ'].includes(uni)) return 'دهۆک';
+    if (['زانکۆی سەڵاحەدین', 'زانکۆی پۆلیتەکنیکی هەولێر', 'زانکۆی هەولێری پزیشکی', 'زانکۆی ڕاپەڕین', 'زانکۆی هەڵەبجە', 'زانکۆی ئاکرێ'].includes(uni)) return 'هەولێر';
+    if (['زانکۆی سلێمانی', 'زانکۆی پۆلیتەکنیکی سلێمانی', 'زانکۆی گەرمیان', 'زانکۆی پۆلیتەکنیکی ڕاپەڕین'].includes(uni)) return 'سلێمانی';
+    if (['زانکۆی دهۆک', 'زانکۆی پۆلیتەکنیکی دهۆک', 'زانکۆی زاخۆ', 'زانکۆی سۆران'].includes(uni)) return 'دهۆک';
   }
   return 'هەولێر';
 }
 
+/* ============================================================
+   🏷️ ناوەکانی بوارەکان
+   ============================================================ */
 const FIELD_LABELS = {
   'كۆمپیوتەر': 'کۆمپیوتەر',
   'كۆمپیوته‌ر': 'کۆمپیوتەر',
@@ -842,26 +752,9 @@ const FIELD_LABELS = {
   'كۆلێژی زانست': 'زانست (کیمیا، بایۆلۆجی، فیزیا...)'
 };
 
-function findUniSegment(fullName) {
-  const parts = fullName.split('/');
-  for (const p of parts) {
-    const n = normArabic(p);
-    if (n.includes('زانکۆ') || n.trim().startsWith('ز.') || n.trim().startsWith('ز ')) return p.trim();
-  }
-  return null;
-}
-
-function classifyUniversity(fullName) {
-  const seg = findUniSegment(fullName);
-  const n = normArabic(seg || fullName);
-  for (const [canonical, aliases] of UNI_MAP) {
-    for (const alias of aliases) {
-      if (n.includes(normArabic(alias))) return canonical;
-    }
-  }
-  return seg ? seg.trim() : null;
-}
-
+/* ============================================================
+   📊 خوێندنەوەی فایل
+   ============================================================ */
 function findHeaderRow(rows) {
   for (let i = 0; i < Math.min(6, rows.length); i++) {
     if (rows[i] && rows[i][0] === 'ز') return i;
@@ -870,53 +763,64 @@ function findHeaderRow(rows) {
 }
 
 function parseSheet(rows, sheetName) {
-  const headerIdx = findHeaderRow(rows);
-  if (headerIdx === null) return [];
-  const headerRow = rows[headerIdx] || [];
-  const subHeaderRow = rows[headerIdx + 1] || [];
+  const headerRowIdx = findHeaderRow(rows);
+  if (headerRowIdx === null) return [];
+
+  const headerRow = rows[headerRowIdx] || [];
+  const subHeaderRow = rows[headerRowIdx + 1] || [];
   const colMap = {};
   let lastHeader = null;
+
   for (let i = 0; i < 8; i++) {
     const h = headerRow[i];
     if (h) lastHeader = h;
     colMap[i] = lastHeader;
   }
-  const out = [];
+
+  const result = [];
   let currentSection = null;
-  for (let r = headerIdx + 2; r < rows.length; r++) {
+
+  for (let r = headerRowIdx + 2; r < rows.length; r++) {
     const row = rows[r] || [];
-    const c0 = row[0];
-    const c1 = row[1];
-    if ((c0 === undefined || c0 === null || c0 === '') && c1) {
-      currentSection = String(c1).trim();
+    const col0 = row[0];
+    const col1 = row[1];
+
+    if ((col0 === undefined || col0 === null || col0 === '') && col1) {
+      currentSection = String(col1).trim();
       continue;
     }
-    if (c0 === undefined || c0 === null || c0 === '') continue;
-    const num = parseInt(c0);
+    if (col0 === undefined || col0 === null || col0 === '') continue;
+
+    const num = parseInt(col0);
     if (isNaN(num)) continue;
-    const fullName = c1 ? String(c1).trim() : '';
+
+    const fullName = col1 ? String(col1).trim() : '';
     if (!fullName) continue;
+
     for (let c = 2; c < 8; c++) {
       let val = row[c];
       if (val === undefined || val === null || val === '') continue;
       val = parseFloat(val);
       if (isNaN(val)) continue;
-      const mainHeader = colMap[c];
+
+      const colHeader = colMap[c];
       const subHeader = subHeaderRow[c];
+
       let session, quota, track;
-      if (mainHeader === 'ئێواران') {
+      if (colHeader === 'ئێواران') {
         session = 'ئێواران';
-        if (subHeader === 'پارالێڵ' || subHeader === 'پارالێل') {
+        if (subHeader === 'زانكۆلاین' || subHeader === 'زانکۆلاین') {
           quota = subHeader; track = null;
         } else {
           quota = null; track = subHeader;
         }
       } else {
         session = 'بەیانی';
-        quota = mainHeader;
+        quota = colHeader;
         track = subHeader;
       }
-      out.push({
+
+      result.push({
         sheet: sheetName,
         section: currentSection,
         fullName: fullName,
@@ -927,78 +831,78 @@ function parseSheet(rows, sheetName) {
       });
     }
   }
-  return out;
+  return result;
 }
 
 function buildDepartmentsFromWorkbook(wb) {
   let all = [];
   for (const sheetName of wb.SheetNames) {
-    const ws = wb.Sheets[sheetName];
-    const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: null, raw: true });
+    const sheet = wb.Sheets[sheetName];
+    const rows = XLSX.utils.sheet_to_json(sheet, { header: 1, defval: null, raw: true });
     all = all.concat(parseSheet(rows, sheetName));
   }
-  const map = {};
-  for (const r of all) {
-    const key = r.fullName;
-    if (!map[key]) {
+
+  const grouped = {};
+  for (const item of all) {
+    const key = item.fullName;
+    if (!grouped[key]) {
       const uni = classifyUniversity(key);
       const prov = detectProvinceFromNameAndUni(key, uni);
-      const rawField = stripZwnj(r.section);
-      map[key] = {
+      const field = stripZwnj(item.section);
+      grouped[key] = {
         name: stripZwnj(key),
         university: stripZwnj(uni || 'نەزانراو'),
         province: prov,
-        field: rawField,
-        fieldLabel: FIELD_LABELS[r.section] || FIELD_LABELS[rawField] || rawField,
-        section: stripZwnj(r.section),
+        field: field,
+        fieldLabel: FIELD_LABELS[item.section] || FIELD_LABELS[field] || field,
+        section: stripZwnj(item.section),
         rows: []
       };
     }
-    map[key].rows.push({
-      quota: r.quota,
-      track: r.track,
-      session: r.session,
-      score: r.score
+    grouped[key].rows.push({
+      quota: item.quota,
+      track: item.track,
+      session: item.session,
+      score: item.score
     });
   }
-  return Object.values(map);
+  return Object.values(grouped);
 }
 
 /* ============================================================
-   🎯 گونجاندن
+   🎯 پۆلێنکردن و هاوتاکردن
    ============================================================ */
 const BAND_TARGETS = { reach: 10, match: 30, safety: 10 };
-const BAND_RANGES = { reach: [3, 5], match: [0, 3], safety: [-3, -0] };
+const BAND_RANGES = { reach: [3, 5], match: [0, 3], safety: [-3, 0] };
 
 let DISPLAYED_BANDS = { reach: [], match: [], safety: [] };
 let CURRENT_STUDENT = null;
 
-function trackMatches(deptTrack, filterTrack) {
-  if (!filterTrack) return true;
-  const d = normArabic(deptTrack);
-  const f = normArabic(filterTrack);
-  if (f.includes('زانكۆلاین')) return d.includes('زانکۆلاین');
-  if (f.includes('پارالێڵ')) return d.includes('پارالێڵ') || d.includes('پارالێل');
-  return d === f;
+function trackMatches(rowTrack, studentTrack) {
+  if (!studentTrack) return true;
+  const rt = normArabic(rowTrack);
+  const st = normArabic(studentTrack);
+  if (st.includes('زانكۆلاین')) return rt.includes('زانکۆلاین');
+  if (st.includes('پارالێڵ')) return rt.includes('پارالێڵ') || rt.includes('پارلل');
+  return rt === st;
 }
 
 function isMedicalInstitute(dept) {
-  const n = normArabic(dept.fieldLabel);
-  const isInst = n.includes('پەیمانگا') || n.includes('په‌یمانگا') || n.includes('انستیتو');
-  const isMed = n.includes('پەرستاری') || n.includes('پزیشکی') || n.includes('تەندروستی') ||
-                n.includes('دەرمانسازی') || n.includes('پزیشكی') || n.includes('په‌رستاری') ||
-                n.includes('تەکنیکی پزیشکی') || n.includes('شیکاری پزیشکی') || n.includes('چاودێری تەندروستی') ||
-                n.includes('پزیشکی ددان') || n.includes('بێهۆشکاری');
-  return isInst && isMed;
+  const n = normArabic(dept.section);
+  const isInstitute = n.includes('پەیمانگا') || n.includes('په‌یمانگا') || n.includes('پەیمانگە');
+  const isMedical = n.includes('پەرستاری') || n.includes('پزیشکی') || n.includes('دەرمانسازی') || n.includes('تەندروستی') || n.includes('قابیلە') || n.includes('ژینگە') || n.includes('پزیشکی');
+  return isInstitute && isMedical;
 }
 
 function isBranchCompatible(dept, branch) {
   if (!branch) return true;
-  const n = normArabic(dept.fieldLabel + ' ' + (dept.section || '') + ' ' + (dept.field || ''));
-  const sciKeywords = ['زانستی', 'بیرکاری', 'فیزیا', 'فیزیك', 'کیمیا', 'کیمیاوی', 'بایۆلۆجی', 'زیندەوەر', 'بایۆلۆژی', 'کامپیوتەر', 'کۆمپیوتەر', 'تەکنەلۆجیا', 'تەكنەلۆجیا', 'ئەندازیاری', 'ئه‌ندازیاری', 'پزیشکی', 'پزیشكی', 'پەرستاری', 'په‌رستاری', 'تەندروستی', 'دەرمانسازی', 'شیکاری', 'چاودێری', 'بێهۆشکاری', 'دانیشتووان', 'ژینگە', 'گەردوون', 'ئامار', 'بیركاری', 'فیزیك', 'کیمیا', 'زیندەوەر', 'گیانلەبەر', 'ڕوەک', 'خاک', 'سیستەم', 'cs', 'it'];
-  const litKeywords = ['وێژەیی', 'زمان', 'فەلسەفە', 'جوگرافیا', 'مێژوو', 'کۆمەڵایەتی', 'راگهیاندن', 'ڕاگەیاندن', 'هونەر', 'شانۆ', 'مۆسیقا', 'وەرزش', 'دەروونناسی', 'یاسا', 'قانون', 'ئاداب', 'کارگێڕی'];
-  const hasSci = sciKeywords.some(k => n.includes(normArabic(k)));
-  const hasLit = litKeywords.some(k => n.includes(normArabic(k)));
+  const text = normArabic(dept.section + ' ' + (dept.field || '') + ' ' + (dept.fieldLabel || ''));
+  const sciKeywords = ['زانست', 'پزیشکی', 'ئەندازیاری', 'پەرستاری', 'کۆمپیوتەر', 'تەکنەلۆجیا', 'کیمیا', 'فیزیا', 'بایۆلۆجی', 'بیرکاری', 'ئامار', 'جوگرافیا', 'کشتوکاڵ', 'بەیتەر', 'دەرمانسازی', 'تەندروستی', 'ڤێتێرنەری', 'زەوی', 'ژینگە'];
+  const litKeywords = ['ئاداب', 'زمان', 'مێژوو', 'جوگرافیا', 'فەلسەفە', 'کۆمەڵایەتی', 'دەروونناسی', 'یاسا', 'سیاسەت', 'ئابوری', 'کارگێڕی', 'پەروەردە', 'وەرزش', 'هونەر', 'شانۆ', 'میوزیک', 'راگەیاندن', 'کتابخانە', 'شوێنەوار'];
+
+  const hasSci = sciKeywords.some(k => text.includes(normArabic(k)));
+  const hasLit = litKeywords.some(k => text.includes(normArabic(k)));
+
   if (branch === 'زانستی') {
     if (hasLit && !hasSci) return false;
   } else if (branch === 'وێژەیی') {
@@ -1009,17 +913,20 @@ function isBranchCompatible(dept, branch) {
 
 function pickScores(dept, student) {
   if (!isBranchCompatible(dept, student.branch)) return [];
+
   const session = student.session;
   const track = student.track;
   const prov = student.province || '';
-  const isMedInst = isMedicalInstitute(dept);
+  const isMed = isMedicalInstitute(dept);
 
   let rows = dept.rows.filter(r => {
     if (session && r.session !== session) return false;
     if (!trackMatches(r.track, track)) return false;
+
     const isZankoline = normArabic(r.track).includes('زانکۆلاین');
     const isMorning = r.session === 'بەیانی';
-    if (isMedInst && isZankoline && isMorning) {
+
+    if (isMed && isZankoline && isMorning) {
       if (prov && dept.province && prov !== dept.province) return false;
     }
     return true;
@@ -1033,9 +940,13 @@ function pickScores(dept, student) {
     function rank(r) {
       const q = r.quota || '';
       if (sameProv) {
-        return q === 'پارالێڵ' ? 0 : q === 'پارالێل' ? 1 : 2;
+        if (q === 'زانكۆلاین') return 0;
+        if (q === 'پارالێڵ') return 1;
+        return 2;
       }
-      return q === 'پارالێل' ? 0 : q === 'پارالێڵ' ? 1 : 2;
+      if (q === 'پارالێڵ') return 0;
+      if (q === 'زانكۆلاین') return 1;
+      return 2;
     }
     return rank(a) - rank(b);
   });
@@ -1044,16 +955,17 @@ function pickScores(dept, student) {
 }
 
 function calculatePreferenceScore(dept, student) {
-  let s = 0;
-  if (student.fields && student.fields.length > 0 && student.fields.includes(dept.fieldLabel)) s += 100;
-  if (student.unis && student.unis.length > 0 && student.unis.includes(dept.university)) s += 100;
-  if (student.provs && student.provs.length > 0 && student.provs.includes(dept.province)) s += 100;
-  return s;
+  let score = 0;
+  if (student.fields && student.fields.length > 0 && student.fields.includes(dept.fieldLabel)) score += 100;
+  if (student.unis && student.unis.length > 0 && student.unis.includes(dept.university)) score += 100;
+  if (student.provs && student.provs.length > 0 && student.provs.includes(dept.province)) score += 100;
+  return score;
 }
 
 function getScoredDepartmentObjects(dept, student) {
   const rows = pickScores(dept, student);
   if (rows.length === 0) return [];
+
   return rows.map(r => {
     const diff = Math.round((r.score - student.score) * 100) / 100;
     const prefScore = calculatePreferenceScore(dept, student);
@@ -1073,11 +985,9 @@ function getScoredDepartmentObjects(dept, student) {
   });
 }
 
-/* ✅ فەنکشنی یەکێک بۆ addMoreDept */
 function getScoredDepartmentObject(dept, student) {
-  const objs = getScoredDepartmentObjects(dept, student);
-  if (objs.length === 0) return null;
-  return objs[0];
+  const arr = getScoredDepartmentObjects(dept, student);
+  return arr.length > 0 ? arr[0] : null;
 }
 
 function multiCriteriaSorter(a, b) {
@@ -1087,83 +997,69 @@ function multiCriteriaSorter(a, b) {
 
 function runMatching(student, departments) {
   CURRENT_STUDENT = student;
-  let all = [];
+  let allCandidates = [];
   for (const dept of departments) {
-    const objs = getScoredDepartmentObjects(dept, student);
-    all = all.concat(objs);
+    const scored = getScoredDepartmentObjects(dept, student);
+    allCandidates = allCandidates.concat(scored);
   }
 
   const bands = { reach: [], match: [], safety: [] };
   const seen = new Set();
 
   for (const band of ['reach', 'match', 'safety']) {
-    const [minD, maxD] = BAND_RANGES[band];
-    let list = all.filter(d => {
-      const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-      return d.diff >= minD && d.diff <= maxD && !seen.has(key);
+    const [min, max] = BAND_RANGES[band];
+    let filtered = allCandidates.filter(d => d.diff >= min && d.diff <= max && !seen.has(d.name + '|' + (d.session || '') + '|' + (d.track || '')));
+    filtered.sort(multiCriteriaSorter);
+    const picked = filtered.slice(0, BAND_TARGETS[band]);
+    picked.forEach(p => {
+      seen.add(p.name + '|' + (p.session || '') + '|' + (p.track || ''));
     });
-    list.sort(multiCriteriaSorter);
-    const chosen = list.slice(0, BAND_TARGETS[band]);
-    chosen.forEach(d => {
-      const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-      seen.add(key);
-    });
-    bands[band] = chosen;
+    bands[band] = picked;
   }
 
   let total = bands.reach.length + bands.match.length + bands.safety.length;
+
   if (total < 50) {
     let need = 50 - total;
-    let rest = all.filter(d => {
-      const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-      return !seen.has(key);
-    });
+    let remaining = allCandidates.filter(d => !seen.has(d.name + '|' + (d.session || '') + '|' + (d.track || '')));
+    let reachExtra = remaining.filter(d => d.diff > 0);
+    let matchExtra = remaining.filter(d => d.diff <= 0 && d.diff >= -3);
+    let safetyExtra = remaining.filter(d => d.diff < -3);
 
-    const reachRest = rest.filter(d => d.diff > 0);
-    const matchRest = rest.filter(d => d.diff <= 0 && d.diff >= -3);
-    const safetyRest = rest.filter(d => d.diff < -3);
+    reachExtra.sort(multiCriteriaSorter);
+    matchExtra.sort(multiCriteriaSorter);
+    safetyExtra.sort(multiCriteriaSorter);
 
-    reachRest.sort(multiCriteriaSorter);
-    matchRest.sort(multiCriteriaSorter);
-    safetyRest.sort(multiCriteriaSorter);
-
-    while (need > 0 && (reachRest.length > 0 || matchRest.length > 0 || safetyRest.length > 0)) {
-      if (need > 0 && reachRest.length > 0) {
-        let d = reachRest.shift();
-        const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-        seen.add(key);
-        bands.reach.push(d);
+    while (need > 0 && (reachExtra.length > 0 || matchExtra.length > 0 || safetyExtra.length > 0)) {
+      if (need > 0 && reachExtra.length > 0) {
+        let x = reachExtra.shift();
+        seen.add(x.name + '|' + (x.session || '') + '|' + (x.track || ''));
+        bands.reach.push(x);
         need--;
       }
-      if (need > 0 && matchRest.length > 0) {
-        let d = matchRest.shift();
-        const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-        seen.add(key);
-        bands.match.push(d);
+      if (need > 0 && matchExtra.length > 0) {
+        let x = matchExtra.shift();
+        seen.add(x.name + '|' + (x.session || '') + '|' + (x.track || ''));
+        bands.match.push(x);
         need--;
       }
-      if (need > 0 && safetyRest.length > 0) {
-        let d = safetyRest.shift();
-        const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-        seen.add(key);
-        bands.safety.push(d);
+      if (need > 0 && safetyExtra.length > 0) {
+        let x = safetyExtra.shift();
+        seen.add(x.name + '|' + (x.session || '') + '|' + (x.track || ''));
+        bands.safety.push(x);
         need--;
       }
     }
 
     if (need > 0) {
-      let rest2 = all.filter(d => {
-        const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-        return !seen.has(key);
-      });
-      rest2.sort(multiCriteriaSorter);
-      let extra = rest2.slice(0, need);
-      extra.forEach(d => {
-        const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
-        seen.add(key);
-        if (d.diff > 0) bands.reach.push(d);
-        else if (d.diff >= -3) bands.match.push(d);
-        else bands.safety.push(d);
+      let last = allCandidates.filter(d => !seen.has(d.name + '|' + (d.session || '') + '|' + (d.track || '')));
+      last.sort(multiCriteriaSorter);
+      let slice = last.slice(0, need);
+      slice.forEach(x => {
+        seen.add(x.name);
+        if (x.diff > 0) bands.reach.push(x);
+        else if (x.diff >= -3) bands.match.push(x);
+        else bands.safety.push(x);
       });
     }
   }
@@ -1173,11 +1069,11 @@ function runMatching(student, departments) {
   });
 
   DISPLAYED_BANDS = bands;
-  return { bands, totalCandidates: all.length };
+  return { bands: bands, totalCandidates: allCandidates.length };
 }
 
 /* ============================================================
-   📊 گۆڕاوەکانی بەکارهێنەر
+   🌐 گۆڕاوەکانی دۆخ
    ============================================================ */
 let DEPARTMENTS = [];
 let selFields = new Set();
@@ -1188,7 +1084,7 @@ let sessionVal = 'بەیانی';
 let branchVal = 'زانستی';
 
 /* ============================================================
-   🖥️ DOM
+   📥 بارکردنی داتا
    ============================================================ */
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
@@ -1202,7 +1098,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 async function autoFetchJsonData() {
   uploadStatus.className = 'upload-status';
-  uploadStatus.textContent = '⏳ چاوەڕوان بە... داتا لە سێرڤەرەوە دەهێنرێت.';
+  uploadStatus.textContent = 'داتای سیستەم بارکردن...';
   try {
     const res = await fetch(DEPARTMENTS_API_URL, {
       cache: 'no-store',
@@ -1210,9 +1106,9 @@ async function autoFetchJsonData() {
     });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
-    if (!Array.isArray(data) || data.length === 0) throw new Error('داتای گونجاو نەدۆزرایەوە.');
+    if (!Array.isArray(data) || data.length === 0) throw new Error('داتای بەتاڵ');
     DEPARTMENTS = data;
-    onDataReady('سێرڤەر');
+    onDataReady('داتای سیستەم');
   } catch (err) {
     console.error(err);
     uploadStatus.className = 'upload-status err';
@@ -1243,19 +1139,19 @@ fileInput.addEventListener('change', e => {
 
 function handleFile(file) {
   uploadStatus.className = 'upload-status';
-  uploadStatus.textContent = '⏳ فایل دەخوێندرێتەوە...';
+  uploadStatus.textContent = 'خوێندنەوەی فایل...';
   const reader = new FileReader();
   const isJson = /\.json$/i.test(file.name);
 
-  reader.onload = function (ev) {
+  reader.onload = function(e) {
     try {
       if (isJson) {
-        DEPARTMENTS = JSON.parse(ev.target.result);
+        DEPARTMENTS = JSON.parse(e.target.result);
       } else {
-        const wb = XLSX.read(ev.target.result, { type: 'binary' });
+        const wb = XLSX.read(e.target.result, { type: 'binary' });
         DEPARTMENTS = buildDepartmentsFromWorkbook(wb);
       }
-      if (!DEPARTMENTS.length) throw new Error('داتای گونجاو نەدۆزرایەوە.');
+      if (!DEPARTMENTS.length) throw new Error('داتای بەتاڵ');
       onDataReady(file.name);
     } catch (err) {
       console.error(err);
@@ -1265,14 +1161,13 @@ function handleFile(file) {
       proceedBtn.disabled = true;
     }
   };
-
-  if (isJson) reader.readAsText(file, 'utf-8');
+  if (isJson) reader.readAsText(file);
   else reader.readAsBinaryString(file);
 }
 
-function onDataReady(source) {
+function onDataReady(sourceName) {
   uploadStatus.className = 'upload-status ok';
-  uploadStatus.textContent = '✓ فایلی «' + source + '» بە سەرکەوتوویی بارکرا.';
+  uploadStatus.textContent = '✓ فایلی «' + sourceName + '» بە سەرکەوتوویی بارکرا.';
   document.getElementById('statDepts').textContent = DEPARTMENTS.length;
   document.getElementById('statUnis').textContent = new Set(DEPARTMENTS.map(d => d.university)).size;
   document.getElementById('statFields').textContent = new Set(DEPARTMENTS.map(d => d.fieldLabel)).size;
@@ -1305,26 +1200,27 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 });
 
 /* ============================================================
-   📝 پڕکردنەوەی فۆرم
+   📋 پڕکردنەوەی فۆرم
    ============================================================ */
 function populateFormOptions() {
-  const fieldLabels = Array.from(new Set(DEPARTMENTS.map(d => d.fieldLabel))).sort();
-  const fieldToRaw = {};
-  DEPARTMENTS.forEach(d => { fieldToRaw[d.fieldLabel] = d.field; });
+  const fields = Array.from(new Set(DEPARTMENTS.map(d => d.fieldLabel))).sort();
+  const fieldMap = {};
+  DEPARTMENTS.forEach(d => { fieldMap[d.fieldLabel] = d.field; });
 
-  document.getElementById('chipsFields').innerHTML = fieldLabels.map(f =>
-    `<div class="chip" data-v="${fieldToRaw[f]}">${f}</div>`
+  document.getElementById('chipsFields').innerHTML = fields.map(f =>
+    `<span class="chip" data-v="${fieldMap[f]}">${f}</span>`
   ).join('');
 
   const unis = Array.from(new Set(DEPARTMENTS.map(d => d.university)))
-    .filter(u => u !== 'نەزانراو').sort();
+    .filter(u => u !== 'نەزانراو')
+    .sort();
   document.getElementById('chipsUnis').innerHTML = unis.map(u =>
-    `<div class="chip" data-v="${u}">${u}</div>`
+    `<span class="chip" data-v="${u}">${u}</span>`
   ).join('');
 
   const provs = ['هەولێر', 'سلێمانی', 'دهۆک'];
   document.getElementById('chipsProvs').innerHTML = provs.map(p =>
-    `<div class="chip" data-v="${p}">${p}</div>`
+    `<span class="chip" data-v="${p}">${p}</span>`
   ).join('');
 
   document.querySelectorAll('#chipsFields .chip').forEach(chip => {
@@ -1337,17 +1233,18 @@ function populateFormOptions() {
   document.querySelectorAll('#chipsUnis .chip').forEach(chip => {
     chip.addEventListener('click', () => {
       chip.classList.toggle('on');
-      toggleSet(selUnis, chip.textContent);
+      toggleSet(selUnis, chip.dataset.v);
     });
   });
 
   document.querySelectorAll('#chipsProvs .chip').forEach(chip => {
     chip.addEventListener('click', () => {
       chip.classList.toggle('on');
-      toggleSet(selProvs, chip.textContent);
+      toggleSet(selProvs, chip.dataset.v);
     });
   });
 
+  // Admin vs Student
   const nameInput = document.getElementById('fName');
   const scoreInput = document.getElementById('fScore');
 
@@ -1355,12 +1252,11 @@ function populateFormOptions() {
     nameInput.disabled = false;
     nameInput.style.background = '#fff';
     nameInput.style.cursor = 'text';
-    nameInput.title = 'وەک ئەدمین دەتوانیت ناو بنووسیت';
-    nameInput.placeholder = 'ناوی خوێندکار بنووسە...';
+    nameInput.title = 'وەک ئەدمین دەتوانیت ناوی خوێندکار بنووسیت';
     scoreInput.disabled = false;
     scoreInput.style.background = '#fff';
     scoreInput.style.cursor = 'text';
-    scoreInput.title = 'وەک ئەدمین دەتوانیت معدل بنووسیت';
+    scoreInput.title = 'وەک ئەدمین دەتوانیت معدەل بنووسیت';
     showAdminBadge();
   } else {
     if (ACTIVE_USER.name) {
@@ -1371,7 +1267,7 @@ function populateFormOptions() {
     if (ACTIVE_USER.score !== null && !isNaN(ACTIVE_USER.score)) {
       scoreInput.value = ACTIVE_USER.score;
       scoreInput.disabled = true;
-      scoreInput.title = '🔒 معدلەکە لە خۆتۆمارکردنەوە هاتووە و ناگۆڕدرێت';
+      scoreInput.title = '🔒 معدەل لە خۆتۆمارکردنەوە هاتووە';
     }
   }
 
@@ -1385,18 +1281,19 @@ function populateFormOptions() {
 }
 
 function showAdminBadge() {
-  const topRight = document.querySelector('.topbar-right');
-  if (topRight && !document.getElementById('adminBadge')) {
-    const badge = document.createElement('span');
-    badge.id = 'adminBadge';
-    badge.innerHTML = '👑 ئەدمین';
-    badge.style.background = '#B8863B';
-    badge.style.color = '#fff';
-    badge.style.padding = '4px 12px';
-    badge.style.borderRadius = '20px';
-    badge.style.fontSize = '12px';
-    badge.style.fontWeight = '700';
-    topRight.insertBefore(badge, topRight.firstChild);
+  const right = document.querySelector('.topbar-right');
+  if (right && !document.getElementById('adminBadge')) {
+    const span = document.createElement('span');
+    span.id = 'adminBadge';
+    span.innerHTML = '👑 ئەدمین';
+    span.style.background = 'linear-gradient(135deg, #D97706 0%, #F59E0B 100%)';
+    span.style.color = '#fff';
+    span.style.padding = '4px 12px';
+    span.style.borderRadius = '20px';
+    span.style.fontSize = '11.5px';
+    span.style.fontWeight = '700';
+    span.style.boxShadow = '0 3px 10px rgba(217,119,6,0.4)';
+    right.insertBefore(span, right.firstChild);
   }
 }
 
@@ -1405,6 +1302,9 @@ function toggleSet(set, val) {
   else set.add(val);
 }
 
+/* ============================================================
+   🎛️ Segmented controls
+   ============================================================ */
 document.querySelectorAll('#segBranch button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('#segBranch button').forEach(b => b.classList.remove('active'));
@@ -1430,22 +1330,23 @@ document.querySelectorAll('#segSession button').forEach(btn => {
 });
 
 /* ============================================================
-   🚀 دروستکردنی پێشنیار
+   🎯 دروستکردنی پێشنیار
    ============================================================ */
 document.getElementById('genBtn').addEventListener('click', () => {
   let name, score;
+
   if (IS_ADMIN) {
     name = document.getElementById('fName').value.trim() || 'خوێندکار';
     score = parseFloat(document.getElementById('fScore').value);
     if (isNaN(score) || score < 50 || score > 100) {
-      alert('تکایە معدلێکی دروست لە نێوان 50 و 100 بنووسە.');
+      alert('تکایە معدەلێکی دروست لە نێوان 50 و 100 بنووسە.');
       return;
     }
   } else {
     name = ACTIVE_USER.name || 'خوێندکار';
     score = ACTIVE_USER.score;
     if (score === null || isNaN(score) || score < 50 || score > 100) {
-      alert('معدلەکەت لە سیستەمەکەدا دروست نییە. تکایە پەیوەندی بە بەڕێوەبەر بکە.');
+      alert('معدەل بەردەست نییە. تکایە دووبارە بچۆ ژوورەوە.');
       return;
     }
   }
@@ -1469,20 +1370,20 @@ document.getElementById('genBtn').addEventListener('click', () => {
 });
 
 /* ============================================================
-   🎨 ڕەندەرکردن
+   🖨️ ڕێکخستنەکانی باند
    ============================================================ */
 const BAND_META = {
-  reach: {
-    title: 'دەستەی بەشەکانی ئاست بەرز (مەترسی)',
-    desc: 'ئەو بەشانەی نمرەی ساڵی پاریان زۆر بەرزتر بووە لە معدەلی تۆ (ڕێکخراو بەپێی دڵخوازی و نمرە)'
+  'reach': {
+    title: '🎯 دەستەی بەشەکانی بەرز (Reach)',
+    desc: 'ئەو بەشانەی نمرەی ساڵی پاریان ٣ بۆ ٥ نمرە بەرزترە لە معدەلی تۆ — هەوڵبدە بەڵام مەترسی هەیە'
   },
-  match: {
-    title: 'دەستەی بەشەکانی گونجاو (ئاسایی)',
+  'match': {
+    title: '✅ دەستەی بەشەکانی گونجاو (Match)',
     desc: 'ئەو بەشانەی نمرەی ساڵی پاریان زۆر نزیک بووە لە معدەلی تۆ (ڕێکخراو بەپێی دڵخوازی و نمرە)'
   },
-  safety: {
-    title: 'دەستەی بەشەکانی دڵنیاکەرەوە (کەمتر لە معدەلەکەت)',
-    desc: 'ئەو بەشانەی نمرەی ساڵی پاریان زۆر کەمتر بووە لە معدەلی تۆ (ڕێکخراو بەپێی دڵخوازی و نمرە)'
+  'safety': {
+    title: '🛡️ دەستەی بەشەکانی دڵنیاکەرەوە (Safety)',
+    desc: 'ئەو بەشانەی نمرەی ساڵی پاریان ٣ نمرە کەمترە لە معدەلی تۆ — دڵنیاییەکی زۆر'
   }
 };
 
@@ -1496,80 +1397,17 @@ function getRowClass(track, session) {
   const t = (track || '').toLowerCase();
   const s = (session || '').toLowerCase();
   if (t.includes('زانكۆلاین') || t.includes('زانکۆلاین')) return 'row-zankoline';
-  if (t.includes('پارالێڵ') || t.includes('پارلێڵ') || t.includes('پارالێل')) return 'row-parallel';
+  if (t.includes('پارالێڵ') || t.includes('پارلل')) return 'row-parallel';
   if (s.includes('ئێواران')) return 'row-evening';
   if (s.includes('بەیانی')) return 'row-morning';
   return '';
 }
 
-function renderResultsUI() {
-  const total = DISPLAYED_BANDS.reach.length + DISPLAYED_BANDS.match.length + DISPLAYED_BANDS.safety.length;
-
-  document.getElementById('resultsMeta').textContent =
-    'خوێندکار: ' + CURRENT_STUDENT.name + ' (' + CURRENT_STUDENT.branch + ' — معدل: ' +
-    CURRENT_STUDENT.score.toFixed(2) + ') — کۆی ' + total + ' بەش';
-
-  let html = '';
-  if (total < 50) {
-    html = `<div class="warn-box">⚠️ تەنها ${total} بەشی گونجاو دۆزرایەوە (کەمتر لە ٥٠).</div>`;
-  }
-
-  let counter = 1;
-  for (const band of ['reach', 'match', 'safety']) {
-    const list = DISPLAYED_BANDS[band];
-    const meta = BAND_META[band];
-    html += `<div class="band ${band}">
-      <div class="band-head"><h3>${meta.title}</h3><div class="count"><span>${list.length} بەش</span></div></div>
-      <div class="band-desc">${meta.desc}</div>
-      <table>
-        <thead>
-          <tr>
-            <th class="col-drag"></th>
-            <th class="col-num">#</th>
-            <th class="col-dept">ناوی بەش</th>
-            <th class="col-prov">پارێزگا</th>
-            <th class="col-score">نمرەی پێشوو</th>
-            <th class="col-diff">جیاوازی</th>
-            <th class="col-quota">کووتا</th>
-            <th class="col-track">ڕێڕەو</th>
-            <th class="col-session">خوێندن</th>
-            <th class="col-action">سڕینەوە</th>
-          </tr>
-        </thead>
-        <tbody>`;
-
-    list.forEach((d, idx) => {
-      const favCls = d.isFav ? 'fav-row' : '';
-      const favBadge = d.isFav ? '<span class="fav-badge">★ دڵخواز</span>' : '';
-      const rowCls = getRowClass(d.track, d.session);
-      html += `<tr class="draggable-row ${favCls} ${rowCls}"
-        draggable="true" data-band="${band}" data-index="${idx}">
-        <td class="col-drag drag-handle" title="ڕایبکێشە بۆ سەرەوە یان خوارەوە">☰</td>
-        <td class="col-num">${counter++}</td>
-        <td class="col-dept name">${favBadge}${d.name}</td>
-        <td class="col-prov">${d.province || '-'}</td>
-        <td class="col-score">${d.lastYearScore.toFixed(2)}</td>
-        ${fmtDiff(d.diff)}
-        <td class="col-quota">${d.quota || '-'}</td>
-        <td class="col-track">${d.track || '-'}</td>
-        <td class="col-session">${d.session || '-'}</td>
-        <td class="col-action">
-          <button class="action-btn delete" onclick="removeDept('${band}', ${idx})">✕</button>
-        </td>
-      </tr>`;
-    });
-
-    html += `</tbody></table>
-      <button class="add-more-btn" onclick="addMoreDept('${band}')">+ زیادکردنی بەشی تر</button>
-    </div>`;
-  }
-
-  document.getElementById('resultsBody').innerHTML = html;
-  setupDragAndDrop();
-}
-
-function removeDept(band, idx) {
-  DISPLAYED_BANDS[band].splice(idx, 1);
+/* ============================================================
+   🗑️ سڕینەوە و زیادکردن — بە EVENT LISTENER (چارەسەری کێشە)
+   ============================================================ */
+function removeDept(band, index) {
+  DISPLAYED_BANDS[band].splice(index, 1);
   renderResultsUI();
 }
 
@@ -1589,14 +1427,104 @@ function addMoreDept(band) {
   }
 
   if (candidates.length === 0) {
-    alert('بەشی تر بۆ زیادکردن نەدۆزرایەوە.');
+    alert('هیچ بەشێکی تر بەردەست نییە بۆ ئەم دەستەیە.');
     return;
   }
-
   candidates.sort(multiCriteriaSorter);
-  const pick = candidates[0];
-  DISPLAYED_BANDS[band].push(pick);
+  DISPLAYED_BANDS[band].push(candidates[0]);
   renderResultsUI();
+}
+
+/* ============================================================
+   🎨 ڕێندەرکردنی ئەنجامەکان
+   ============================================================ */
+function renderResultsUI() {
+  const total = DISPLAYED_BANDS.reach.length + DISPLAYED_BANDS.match.length + DISPLAYED_BANDS.safety.length;
+  document.getElementById('resultsMeta').textContent =
+    `خوێندکار: ${CURRENT_STUDENT.name} (${CURRENT_STUDENT.branch} — معدەل: ${CURRENT_STUDENT.score.toFixed(2)}) — کۆی ${total} بەش`;
+
+  let html = '';
+  if (total < 50) {
+    html += `<div class="warn-box">⚠️ تەنها ${total} بەش دۆزرایەوە لە ٥٠ بەشی داواکراو. هۆکارەکان: داتای کەم یان سنووردارکردنی زۆر.</div>`;
+  }
+
+  let counter = 1;
+
+  for (const band of ['reach', 'match', 'safety']) {
+    const arr = DISPLAYED_BANDS[band];
+    const meta = BAND_META[band];
+
+    html += `<div class="band ${band}">`;
+    html += `<div class="band-head"><h3>${meta.title}</h3><span class="count"><span>${arr.length} بەش</span></span></div>`;
+    html += `<div class="band-desc">${meta.desc}</div>`;
+
+    if (arr.length === 0) {
+      html += `<div style="text-align:center;padding:20px;color:#9a998c;font-size:13px;">هیچ بەشێک نییە لەم دەستەیە</div>`;
+    } else {
+      html += `<div class="table-wrap"><table>`;
+      html += `<thead><tr>
+        <th class="col-drag"></th>
+        <th class="col-num">#</th>
+        <th class="col-dept">ناوی بەش</th>
+        <th class="col-prov">پارێزگا</th>
+        <th class="col-score">نمرەی ساڵی پاری</th>
+        <th class="col-diff">جیاوازی</th>
+        <th class="col-quota">جۆر</th>
+        <th class="col-track">ڕێڕەو</th>
+        <th class="col-session">خوێندن</th>
+        <th class="col-action">سڕینەوە</th>
+      </tr></thead><tbody>`;
+
+      arr.forEach((d, idx) => {
+        const favBadge = d.isFav ? '<span class="fav-badge">★ دڵخواز</span>' : '';
+        const rowCls = getRowClass(d.track, d.session);
+
+        html += `<tr class="draggable-row ${rowCls}" data-band="${band}" data-index="${idx}">
+          <td class="col-drag drag-handle" title="ڕایبکێشە بۆ سەرەوە یان خوارەوە">☰</td>
+          <td class="col-num">${counter++}</td>
+          <td class="col-dept name">${favBadge}${d.name}</td>
+          <td class="col-prov">${d.province || '-'}</td>
+          <td class="col-score">${d.lastYearScore.toFixed(2)}</td>
+          ${fmtDiff(d.diff)}
+          <td class="col-quota">${d.quota || '-'}</td>
+          <td class="col-track">${d.track || '-'}</td>
+          <td class="col-session">${d.session || '-'}</td>
+          <td class="col-action"><button class="action-btn delete" data-band="${band}" data-index="${idx}" title="سڕینەوە">✕</button></td>
+        </tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      html += `<button class="add-more-btn" data-band="${band}">➕ زیادکردنی بەشێکی تر</button>`;
+    }
+
+    html += `</div>`;
+  }
+
+  document.getElementById('resultsBody').innerHTML = html;
+  setupDragAndDrop();
+  attachRowButtons();
+}
+
+/* ============================================================
+   🔘 بەستنی بەتنەکان بە Event Listener
+   ============================================================ */
+function attachRowButtons() {
+  document.querySelectorAll('.action-btn.delete').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const band = btn.dataset.band;
+      const index = parseInt(btn.dataset.index);
+      removeDept(band, index);
+    });
+  });
+
+  document.querySelectorAll('.add-more-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const band = btn.dataset.band;
+      addMoreDept(band);
+    });
+  });
 }
 
 /* ============================================================
@@ -1630,7 +1558,7 @@ function handleDragOver(e) {
   e.dataTransfer.dropEffect = 'move';
 }
 
-function handleDragLeave(e) {
+function handleDragLeave() {
   this.classList.remove('drag-over');
 }
 
@@ -1644,19 +1572,19 @@ function handleDrop(e) {
 
   if (draggedBand === targetBand && dragSrcIndex !== null && dragSrcIndex !== targetIndex) {
     const arr = DISPLAYED_BANDS[targetBand];
-    const moved = arr.splice(dragSrcIndex, 1)[0];
+    const [moved] = arr.splice(dragSrcIndex, 1);
     arr.splice(targetIndex, 0, moved);
     renderResultsUI();
   }
 }
 
-function handleDragEnd(e) {
+function handleDragEnd() {
   this.classList.remove('dragging');
   document.querySelectorAll('tr.draggable-row').forEach(r => r.classList.remove('drag-over'));
 }
 
 /* ============================================================
-   📄 چاپکردن
+   🎬 ڕێندەرکردنی سەرەکی
    ============================================================ */
 function renderResults(student, bands, totalCandidates) {
   document.getElementById('emptyState').style.display = 'none';
@@ -1674,24 +1602,23 @@ function renderResults(student, bands, totalCandidates) {
   renderResultsUI();
 }
 
-document.getElementById('printBtn').addEventListener('click', () => window.print());
-
 /* ============================================================
-   🚪 چونەدەرەوە
+   🚪 Logout
    ============================================================ */
-document.getElementById('logoutBtn').addEventListener('click', function (e) {
+document.getElementById('logoutBtn').addEventListener('click', function(e) {
   e.preventDefault();
   localStorage.removeItem('userLoggedIn');
-  localStorage.removeItem('jiga_session');
   localStorage.removeItem('activeUser');
   localStorage.removeItem('activeName');
   localStorage.removeItem('activeBranch');
   localStorage.removeItem('activeScore');
   localStorage.removeItem('activeRole');
-  localStorage.clear();
+  localStorage.removeItem('jiga_session');
   sessionStorage.clear();
-  window.location.replace('index.html');
+  window.location.href = 'index.html';
 });
+
+document.getElementById('printBtn').addEventListener('click', () => window.print());
 </script>
 </body>
 </html>
