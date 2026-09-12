@@ -274,36 +274,65 @@
     background:transparent;
   }
 
-  /* ============================================================
-     🎨 ڕەنگی جۆری خوێندن (Session)
-     ============================================================ */
-  td.session-cell {
-    font-weight: 700;
-    border-radius: 4px;
-    padding: 4px 8px !important;
-  }
-  td.session-cell.session-zankoline {
-    background: #DBEAFE;
-    color: #1E40AF;
-    border: 1px solid #93C5FD;
-  }
-  td.session-cell.session-parallel {
-    background: #FFEDD5;
-    color: #9A3412;
-    border: 1px solid #FDBA74;
-  }
-  td.session-cell.session-evening {
-    background: #EDE9FE;
-    color: #5B21B6;
-    border: 1px solid #C4B5FD;
-  }
-  td.session-cell.session-morning {
-    background: #DCFCE7;
-    color: #166534;
-    border: 1px solid #86EFAC;
-  }
+/* ============================================================
+   🎨 ڕەنگی تەواوی ڕیزەکە بەپێی جۆری خوێندن
+   ============================================================ */
 
-  /* 👑 باجی ئەدمین */
+/* 🔵 زانکۆلاین — تەواوی ڕیزە شین */
+tbody tr.row-zankoline {
+  background: #DBEAFE !important;
+}
+tbody tr.row-zankoline:hover {
+  background: #BFDBFE !important;
+}
+tbody tr.row-zankoline td {
+  color: #1E40AF;
+  border-color: #93C5FD !important;
+}
+
+/* 🟠 پارالێڵ — تەواوی ڕیزە پرتەقاڵی */
+tbody tr.row-parallel {
+  background: #FFEDD5 !important;
+}
+tbody tr.row-parallel:hover {
+  background: #FED7AA !important;
+}
+tbody tr.row-parallel td {
+  color: #9A3412;
+  border-color: #FDBA74 !important;
+}
+
+/* 🟣 ئێواران — تەواوی ڕیزە مۆر */
+tbody tr.row-evening {
+  background: #EDE9FE !important;
+}
+tbody tr.row-evening:hover {
+  background: #DDD6FE !important;
+}
+tbody tr.row-evening td {
+  color: #5B21B6;
+  border-color: #C4B5FD !important;
+}
+
+/* 🟢 بەیانی — تەواوی ڕیزە سەوز */
+tbody tr.row-morning {
+  background: #DCFCE7 !important;
+}
+tbody tr.row-morning:hover {
+  background: #BBF7D0 !important;
+}
+tbody tr.row-morning td {
+  color: #166534;
+  border-color: #86EFAC !important;
+}
+
+/* بۆ ئەوەی ناوی بەش بەرچاو بێت */
+tbody tr.row-zankoline td.name,
+tbody tr.row-parallel td.name,
+tbody tr.row-evening td.name,
+tbody tr.row-morning td.name {
+  font-weight: 700;
+}  /* 👑 باجی ئەدمین */
   #adminBadge {
     animation: fadeInBadge 0.4s ease-out;
   }
@@ -327,6 +356,36 @@
       size: A4 portrait;
       margin: 12mm 10mm 12mm 10mm;
     }
+    
+  /* ✅ ڕەنگەکان لە چاپ بپارێزە */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  tbody tr.row-zankoline,
+  tbody tr.row-zankoline td {
+    background: #DBEAFE !important;
+    color: #1E40AF !important;
+  }
+
+  tbody tr.row-parallel,
+  tbody tr.row-parallel td {
+    background: #FFEDD5 !important;
+    color: #9A3412 !important;
+  }
+
+  tbody tr.row-evening,
+  tbody tr.row-evening td {
+    background: #EDE9FE !important;
+    color: #5B21B6 !important;
+  }
+
+  tbody tr.row-morning,
+  tbody tr.row-morning td {
+    background: #DCFCE7 !important;
+    color: #166534 !important;
+  }
     body{
       background:#fff !important;
       color:#000 !important;
@@ -1252,14 +1311,14 @@ function handleDragEnd(e) {
 /* ============================================================
    🎨 getSessionClass — ڕەنگی جۆری خوێندن
    ============================================================ */
-function getSessionClass(track, session) {
+function getRowClass(track, session) {
   const t = (track || '').toString();
   const s = (session || '').toString();
   
-  if (t.includes('زانكۆلاین') || t.includes('زانکۆلاین')) return 'session-zankoline';
-  if (t.includes('پارالێڵ') || t.includes('پارلێڵ') || t.includes('پارالیل')) return 'session-parallel';
-  if (s.includes('ئێواران')) return 'session-evening';
-  if (s.includes('بەیانی')) return 'session-morning';
+  if (t.includes('زانكۆلاین') || t.includes('زانکۆلاین')) return 'row-zankoline';
+  if (t.includes('پارالێڵ') || t.includes('پارلێڵ') || t.includes('پارالیل')) return 'row-parallel';
+  if (s.includes('ئێواران')) return 'row-evening';
+  if (s.includes('بەیانی')) return 'row-morning';
   return '';
 }
 
@@ -1299,21 +1358,21 @@ function renderResultsUI() {
           <th class="col-action">سڕینەوە</th>
         </tr></thead>
         <tbody>`;
-    items.forEach((it, idx) => {
+       items.forEach((it, idx) => {
       const rowCls = it.isFav ? 'fav-row' : '';
       const favBadge = it.isFav ? `<span class="fav-badge">★ دڵخواز</span>` : '';
-      const sessionCls = getSessionClass(it.track, it.session);
+      const rowColorCls = getRowClass(it.track, it.session);  // ✅ گۆڕدرا
       
-      html += `<tr class="draggable-row ${rowCls}" draggable="true" data-band="${band}" data-index="${idx}">
+      html += `<tr class="draggable-row ${rowCls} ${rowColorCls}" draggable="true" data-band="${band}" data-index="${idx}">
         <td class="col-drag drag-handle" title="ڕایبکێشە بۆ سەرەوە یان خوارەوە">☰</td>
         <td class="col-num">${counter++}</td>
         <td class="col-dept name">${favBadge}${it.name}</td>
         <td class="col-prov">${it.province||'-'}</td>
-        <td class="col-score" style="font-weight:bold; color:var(--ink);">${it.lastYearScore.toFixed(2)}</td>
+        <td class="col-score">${it.lastYearScore.toFixed(2)}</td>
         ${fmtDiff(it.diff)}
         <td class="col-quota">${it.quota||'-'}</td>
         <td class="col-track">${it.track||'-'}</td>
-        <td class="col-session session-cell ${sessionCls}"><b>${it.session||'-'}</b></td>
+        <td class="col-session"><b>${it.session||'-'}</b></td>
         <td class="col-action">
           <button class="action-btn delete" onclick="removeDept('${band}', ${idx})" title="سڕینەوە">🗑️</button>
         </td>
