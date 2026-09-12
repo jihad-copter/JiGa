@@ -1584,8 +1584,11 @@ function isBranchCompatible(dept, studentBranch) {
   return true;
 }
 
-function pickScore(dept, student){
-  if (!isBranchCompatible(dept, student.branch)) return null;
+/* ============================================================
+   ✅ pickScores — چەند نمرە بگەڕێنە (بۆ "هەردووک")
+   ============================================================ */
+function pickScores(dept, student){
+  if (!isBranchCompatible(dept, student.branch)) return [];
 
   const sessionWant = student.session;
   const trackWant = student.track;
@@ -1605,7 +1608,7 @@ function pickScore(dept, student){
     return true;
   });
 
-  if(candidates.length === 0) return null;
+  if(candidates.length === 0) return [];
 
   const local = homeProv && dept.province && homeProv === dept.province;
   candidates = candidates.slice().sort((a,b)=>{
@@ -1616,9 +1619,9 @@ function pickScore(dept, student){
     }
     return pref(a)-pref(b);
   });
-  return candidates[0];
-}
 
+  return candidates;
+}
 function calculatePreferenceScore(dept, student) {
   let score = 0;
   if (student.fields && student.fields.length > 0 && student.fields.includes(dept.field)) score += 100;
@@ -1627,27 +1630,32 @@ function calculatePreferenceScore(dept, student) {
   return score;
 }
 
-function getScoredDepartmentObject(dept, student) {
-  const chosen = pickScore(dept, student);
-  if (!chosen) return null;
-  const diff = Math.round((chosen.score - student.score) * 100) / 100;
-  const prefScore = calculatePreferenceScore(dept, student);
+/* ============================================================
+   ✅ getScoredDepartmentObjects — لیستی ئۆبجێکتەکان
+   ============================================================ */
+function getScoredDepartmentObjects(dept, student) {
+  const chosenList = pickScores(dept, student);
+  if (chosenList.length === 0) return [];
 
-  return {
-    name: dept.name,
-    university: dept.university,
-    province: dept.province,
-    fieldLabel: dept.fieldLabel,
-    lastYearScore: chosen.score,
-    diff,
-    quota: chosen.quota,
-    track: chosen.track,
-    session: chosen.session,
-    isFav: prefScore > 0,
-    prefScore: prefScore
-  };
+  return chosenList.map(chosen => {
+    const diff = Math.round((chosen.score - student.score) * 100) / 100;
+    const prefScore = calculatePreferenceScore(dept, student);
+
+    return {
+      name: dept.name,
+      university: dept.university,
+      province: dept.province,
+      fieldLabel: dept.fieldLabel,
+      lastYearScore: chosen.score,
+      diff,
+      quota: chosen.quota,
+      track: chosen.track,
+      session: chosen.session,
+      isFav: prefScore > 0,
+      prefScore: prefScore
+    };
+  });
 }
-
 function multiCriteriaSorter(a, b) {
   if (b.prefScore !== a.prefScore) {
     return b.prefScore - a.prefScore;
@@ -1657,29 +1665,37 @@ function multiCriteriaSorter(a, b) {
 
 function runMatching(student, departments){
   CURRENT_STUDENT = student;
-  let allScored = [];
-  for (const dept of departments) {
-    const sc = getScoredDepartmentObject(dept, student);
-    if (sc) allScored.push(sc);
-  }
+ let allScored = [];
+for (const dept of departments) {
+  const scList = getScoredDepartmentObjects(dept, student);
+  allScored = allScored.concat(scList);
+}
 
   const bands = { reach: [], match: [], safety: [] };
   const used = new Set();
 
   for(const band of ['reach', 'match', 'safety']){
     const [lo, hi] = BAND_RANGES[band];
-    let pool = allScored.filter(d => d.diff >= lo && d.diff <= hi && !used.has(d.name));
+let pool = allScored.filter(d => {
+  const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
+  return d.diff >= lo && d.diff <= hi && !used.has(key);
+});
     pool.sort(multiCriteriaSorter);
     const take = pool.slice(0, BAND_TARGETS[band]);
-    take.forEach(d => used.add(d.name));
+    take.forEach(d => {
+  const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
+  used.add(key);
+});
     bands[band] = take;
   }
 
   let currentTotal = bands.reach.length + bands.match.length + bands.safety.length;
   if (currentTotal < 50) {
     let neededTotal = 50 - currentTotal;
-    let remainingPool = allScored.filter(d => !used.has(d.name));
-
+let remainingPool = allScored.filter(d => {
+  const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
+  return !used.has(key);
+});
     let extraReach = remainingPool.filter(d => d.diff > 0);
     let extraMatch = remainingPool.filter(d => d.diff <= 0 && d.diff >= -3);
     let extraSafety = remainingPool.filter(d => d.diff < -3);
@@ -1691,26 +1707,30 @@ function runMatching(student, departments){
     while (neededTotal > 0 && (extraReach.length > 0 || extraMatch.length > 0 || extraSafety.length > 0)) {
       if (neededTotal > 0 && extraReach.length > 0) {
         let item = extraReach.shift();
-        used.add(item.name);
+const key = item.name + '|' + (item.session || '') + '|' + (item.track || '');
+used.add(key);
         bands.reach.push(item);
         neededTotal--;
       }
       if (neededTotal > 0 && extraMatch.length > 0) {
         let item = extraMatch.shift();
-        used.add(item.name);
-        bands.match.push(item);
+const key = item.name + '|' + (item.session || '') + '|' + (item.track || '');
+used.add(key);        bands.match.push(item);
         neededTotal--;
       }
       if (neededTotal > 0 && extraSafety.length > 0) {
         let item = extraSafety.shift();
-        used.add(item.name);
-        bands.safety.push(item);
+const key = item.name + '|' + (item.session || '') + '|' + (item.track || '');
+used.add(key);        bands.safety.push(item);
         neededTotal--;
       }
     }
 
     if (neededTotal > 0) {
-      let finalPool = allScored.filter(d => !used.has(d.name));
+let finalPool = allScored.filter(d => {
+  const key = d.name + '|' + (d.session || '') + '|' + (d.track || '');
+  return !used.has(key);
+});
       finalPool.sort(multiCriteriaSorter);
       let fill = finalPool.slice(0, neededTotal);
       fill.forEach(d => {
